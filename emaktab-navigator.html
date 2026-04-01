@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Навигатор будущего | eMaktab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --primary: #5B4FE9;
+    --primary-light: #7B70F5;
+    --primary-dark: #3D33C4;
+    --accent: #FF6B35;
+    --accent2: #00C9A7;
+    --accent3: #FFD23F;
+    --bg: #F4F3FF;
+    --surface: #FFFFFF;
+    --surface2: #F0EFFD;
+    --text: #1A1740;
+    --text2: #6B68A0;
+    --text3: #9896BE;
+    --radius: 20px;
+    --radius-sm: 12px;
+    --shadow: 0 4px 24px rgba(91,79,233,0.12);
+    --shadow-lg: 0 12px 48px rgba(91,79,233,0.18);
+
+    /* Direction colors */
+    --c1: #5B4FE9; /* Tech */
+    --c2: #00B4D8; /* Science */
+    --c3: #FF6B6B; /* Creative */
+    --c4: #FF9F1C; /* Communication */
+    --c5: #06D6A0; /* Helping */
+    --c6: #8338EC; /* Practice */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  .header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    background: rgba(244,243,255,0.85);
+    backdrop-filter: blur(12px);
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(91,79,233,0.08);
+  }
+  .logo { font-weight: 900; font-size: 1.3rem; color: var(--primary); letter-spacing: -0.5px; }
+  .logo span { color: var(--accent); }
+  .lang-toggle {
+    display: flex; gap: 4px; background: var(--surface2); border-radius: 10px; padding: 4px;
+  }
+  .lang-btn {
+    border: none; background: none; padding: 6px 14px; border-radius: 8px;
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.85rem;
+    cursor: pointer; color: var(--text2); transition: all 0.2s;
+  }
+  .lang-btn.active { background: var(--primary); color: white; }
+
+  /* SCREENS */
+  .screen { display: none; min-height: 100vh; padding-top: 72px; }
+  .screen.active { display: flex; flex-direction: column; }
+
+  /* ===================== SCREEN 1: START ===================== */
+  #screen-start {
+    background: linear-gradient(160deg, #EEF0FF 0%, #F4F3FF 50%, #FFF5F0 100%);
+    align-items: center; justify-content: center; text-align: center;
+    padding: 72px 24px 40px;
+  }
+  .start-blob {
+    position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.35; pointer-events: none;
+  }
+  .blob1 { width: 400px; height: 400px; background: var(--primary); top: -100px; left: -100px; }
+  .blob2 { width: 300px; height: 300px; background: var(--accent); bottom: 50px; right: -50px; }
+  .blob3 { width: 200px; height: 200px; background: var(--accent2); top: 30%; left: 60%; }
+
+  .start-content { position: relative; max-width: 560px; }
+  .start-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; border-radius: 50px; padding: 8px 18px;
+    font-weight: 700; font-size: 0.8rem; color: var(--primary);
+    box-shadow: 0 2px 12px rgba(91,79,233,0.15); margin-bottom: 28px;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+  .start-badge .dot { width: 8px; height: 8px; background: var(--accent2); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(1.3)} }
+
+  .start-hero { font-size: clamp(2.2rem, 6vw, 3.4rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 16px; }
+  .start-hero .highlight { color: var(--primary); }
+  .start-hero .highlight2 { color: var(--accent); }
+
+  .start-sub { font-size: 1.05rem; color: var(--text2); line-height: 1.6; margin-bottom: 36px; max-width: 440px; margin-left: auto; margin-right: auto; }
+
+  .start-meta {
+    display: flex; justify-content: center; gap: 24px; margin-bottom: 40px; flex-wrap: wrap;
+  }
+  .meta-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 0.88rem; font-weight: 700; color: var(--text2);
+  }
+  .meta-icon { font-size: 1.2rem; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--primary); color: white;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem;
+    padding: 16px 36px; border-radius: 50px; border: none; cursor: pointer;
+    box-shadow: 0 8px 28px rgba(91,79,233,0.35); transition: all 0.25s;
+    letter-spacing: 0.2px;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 36px rgba(91,79,233,0.45); background: var(--primary-light); }
+  .btn-primary .arrow { font-size: 1.2rem; transition: transform 0.2s; }
+  .btn-primary:hover .arrow { transform: translateX(4px); }
+
+  .start-disclaimer { font-size: 0.78rem; color: var(--text3); margin-top: 20px; }
+
+  .direction-pills {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 36px;
+  }
+  .direction-pill {
+    display: flex; align-items: center; gap: 7px;
+    background: white; border-radius: 50px; padding: 8px 16px;
+    font-size: 0.82rem; font-weight: 700; box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  }
+  .direction-pill .pill-emoji { font-size: 1rem; }
+
+  /* ===================== SCREEN 2: QUIZ ===================== */
+  #screen-quiz {
+    background: var(--bg);
+    padding: 88px 24px 40px;
+    align-items: center;
+  }
+  .quiz-wrap { width: 100%; max-width: 620px; margin: 0 auto; }
+
+  .progress-area { margin-bottom: 32px; }
+  .progress-header {
+    display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+  }
+  .progress-label { font-weight: 700; font-size: 0.85rem; color: var(--text2); }
+  .progress-count { font-weight: 900; font-size: 0.9rem; color: var(--primary); }
+  .progress-bar-bg {
+    background: white; border-radius: 50px; height: 10px; overflow: hidden;
+    box-shadow: inset 0 2px 6px rgba(91,79,233,0.08);
+  }
+  .progress-bar-fill {
+    height: 100%; border-radius: 50px;
+    background: linear-gradient(90deg, var(--primary), var(--primary-light));
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+
+  .question-card {
+    background: white; border-radius: var(--radius); padding: 36px;
+    box-shadow: var(--shadow-lg); margin-bottom: 24px; position: relative; overflow: hidden;
+  }
+  .question-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+  .question-num { font-size: 0.78rem; font-weight: 800; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
+  .question-text { font-size: 1.12rem; font-weight: 700; line-height: 1.55; color: var(--text); }
+
+  .scale-area { margin-top: 8px; }
+  .scale-labels {
+    display: flex; justify-content: space-between;
+    font-size: 0.72rem; font-weight: 700; color: var(--text3); margin-bottom: 14px;
+  }
+  .scale-buttons { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .scale-btn {
+    width: 54px; height: 54px; border-radius: 16px;
+    border: 2.5px solid #E8E6F8; background: white;
+    font-family: 'Nunito', sans-serif; font-weight: 900; font-size: 1.1rem;
+    color: var(--text2); cursor: pointer; transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .scale-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-2px); }
+  .scale-btn.selected {
+    background: var(--primary); border-color: var(--primary);
+    color: white; transform: translateY(-2px) scale(1.08);
+    box-shadow: 0 6px 20px rgba(91,79,233,0.35);
+  }
+  .scale-btn[data-val="5"].selected { background: var(--accent); border-color: var(--accent); box-shadow: 0 6px 20px rgba(255,107,53,0.35); }
+  .scale-btn[data-val="4"].selected { background: var(--primary); }
+  .scale-btn[data-val="3"].selected { background: #8B85F0; border-color: #8B85F0; }
+  .scale-btn[data-val="2"].selected { background: var(--text3); border-color: var(--text3); }
+  .scale-btn[data-val="1"].selected { background: #B8B6D9; border-color: #B8B6D9; }
+
+  .quiz-nav { display: flex; justify-content: space-between; align-items: center; }
+  .btn-ghost {
+    background: none; border: 2.5px solid #E8E6F8; color: var(--text2);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+    padding: 12px 24px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-next {
+    background: var(--primary); color: white;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem;
+    padding: 13px 30px; border-radius: 50px; border: none; cursor: pointer;
+    transition: all 0.2s; opacity: 0.4; pointer-events: none;
+    box-shadow: 0 4px 16px rgba(91,79,233,0.3);
+  }
+  .btn-next.enabled { opacity: 1; pointer-events: all; }
+  .btn-next.enabled:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(91,79,233,0.4); }
+
+  /* ===================== SCREEN 3: LOADING ===================== */
+  #screen-loading {
+    background: linear-gradient(160deg, #EEF0FF, #F4F3FF);
+    align-items: center; justify-content: center; text-align: center; padding: 80px 24px;
+  }
+  .loading-content { max-width: 480px; }
+  .loading-animation {
+    width: 120px; height: 120px; margin: 0 auto 32px;
+    position: relative;
+  }
+  .loading-ring {
+    position: absolute; inset: 0; border-radius: 50%;
+    border: 4px solid transparent;
+    animation: spin 1.5s linear infinite;
+  }
+  .ring1 { border-top-color: var(--primary); }
+  .ring2 { border-right-color: var(--accent); inset: 12px; animation-duration: 2s; animation-direction: reverse; }
+  .ring3 { border-bottom-color: var(--accent2); inset: 24px; animation-duration: 1s; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-emoji { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2rem; animation: float 2s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
+
+  .loading-title { font-size: 1.8rem; font-weight: 900; margin-bottom: 12px; letter-spacing: -0.5px; }
+  .loading-sub { font-size: 0.95rem; color: var(--text2); line-height: 1.6; margin-bottom: 32px; }
+  .loading-dots { display: flex; gap: 10px; justify-content: center; }
+  .loading-dot {
+    width: 10px; height: 10px; border-radius: 50%;
+    animation: dotpulse 1.4s ease-in-out infinite;
+  }
+  .loading-dot:nth-child(1) { background: var(--primary); animation-delay: 0s; }
+  .loading-dot:nth-child(2) { background: var(--accent); animation-delay: 0.2s; }
+  .loading-dot:nth-child(3) { background: var(--accent2); animation-delay: 0.4s; }
+  @keyframes dotpulse { 0%,80%,100%{transform:scale(0.6);opacity:0.4} 40%{transform:scale(1);opacity:1} }
+
+  .loading-steps { margin-bottom: 32px; }
+  .loading-step {
+    display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+    background: white; border-radius: var(--radius-sm); margin-bottom: 10px;
+    text-align: left; opacity: 0; transform: translateY(10px);
+    transition: all 0.4s;
+  }
+  .loading-step.visible { opacity: 1; transform: translateY(0); }
+  .loading-step.done .step-icon { background: var(--accent2); }
+  .step-icon {
+    width: 32px; height: 32px; border-radius: 10px;
+    background: var(--surface2); display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0; transition: background 0.3s;
+  }
+  .step-label { font-weight: 700; font-size: 0.88rem; color: var(--text); }
+
+  /* ===================== SCREEN 4: RESULT ===================== */
+  #screen-result {
+    background: var(--bg);
+    padding: 88px 24px 60px;
+    align-items: center;
+  }
+  .result-wrap { width: 100%; max-width: 700px; margin: 0 auto; }
+
+  .result-header { text-align: center; margin-bottom: 40px; }
+  .result-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; border-radius: 50px; padding: 8px 18px;
+    font-weight: 700; font-size: 0.78rem; color: var(--primary);
+    box-shadow: 0 2px 12px rgba(91,79,233,0.12); margin-bottom: 16px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .result-title { font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+  .result-sub { font-size: 0.95rem; color: var(--text2); }
+
+  .result-cards { margin-bottom: 32px; }
+  .result-card {
+    background: white; border-radius: var(--radius); padding: 28px;
+    box-shadow: var(--shadow); margin-bottom: 20px; position: relative; overflow: hidden;
+    opacity: 0; transform: translateY(24px);
+    transition: all 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .result-card.visible { opacity: 1; transform: translateY(0); }
+  .result-card-accent { position: absolute; top: 0; left: 0; bottom: 0; width: 5px; border-radius: 0 0 0 0; }
+  .result-card-inner { padding-left: 16px; }
+  .result-rank { font-size: 0.72rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 10px; opacity: 0.7; }
+  .result-dir-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; flex-wrap: wrap; }
+  .result-dir-emoji { font-size: 2rem; width: 52px; height: 52px; border-radius: 16px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .result-dir-info { flex: 1; }
+  .result-dir-name { font-size: 1.15rem; font-weight: 900; letter-spacing: -0.3px; }
+  .result-dir-pct { font-size: 0.85rem; font-weight: 700; margin-top: 2px; }
+
+  .result-bar-bg { background: var(--surface2); border-radius: 50px; height: 8px; margin-bottom: 14px; overflow: hidden; }
+  .result-bar-fill { height: 100%; border-radius: 50px; width: 0; transition: width 1s cubic-bezier(0.4,0,0.2,1); }
+
+  .result-desc { font-size: 0.9rem; color: var(--text2); line-height: 1.65; margin-bottom: 16px; }
+  .result-section-title { font-size: 0.72rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; color: var(--text3); margin-bottom: 10px; }
+
+  .result-professions { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+  .profession-tag {
+    background: var(--surface2); border-radius: 50px; padding: 6px 14px;
+    font-size: 0.8rem; font-weight: 700; color: var(--text);
+  }
+
+  .result-activities { display: flex; flex-wrap: wrap; gap: 8px; }
+  .activity-tag {
+    border-radius: 50px; padding: 6px 14px;
+    font-size: 0.8rem; font-weight: 700; color: white; opacity: 0.9;
+  }
+
+  .result-actions {
+    display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 8px;
+  }
+  .btn-share {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: white; border: 2.5px solid #E8E6F8; color: var(--text);
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+    padding: 13px 26px; border-radius: 50px; cursor: pointer; transition: all 0.2s;
+  }
+  .btn-share:hover { border-color: var(--primary); color: var(--primary); }
+  .btn-restart {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--primary); color: white;
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.9rem;
+    padding: 13px 26px; border-radius: 50px; border: none; cursor: pointer; transition: all 0.2s;
+    box-shadow: 0 4px 16px rgba(91,79,233,0.3);
+  }
+  .btn-restart:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(91,79,233,0.4); }
+
+  .share-toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+    background: var(--text); color: white; padding: 14px 24px; border-radius: 50px;
+    font-weight: 700; font-size: 0.88rem; z-index: 999; transition: transform 0.3s;
+  }
+  .share-toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Responsive */
+  @media (max-width: 500px) {
+    .question-card { padding: 24px 20px; }
+    .scale-btn { width: 46px; height: 46px; font-size: 1rem; }
+    .scale-buttons { gap: 7px; }
+    .result-card { padding: 22px 18px; }
+    .result-card-inner { padding-left: 10px; }
+  }
+
+  /* Animations */
+  .fade-in { animation: fadeIn 0.5s ease forwards; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(16px)} to{opacity:1;transform:translateY(0)} }
+
+  .question-card { animation: fadeIn 0.35s ease forwards; }
+
+  /* Helpers */
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">e<span>Maktab</span></div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" onclick="setLang('ru')" id="btn-ru">RU</button>
+    <button class="lang-btn" onclick="setLang('uz')" id="btn-uz">UZ</button>
+  </div>
+</header>
+
+<!-- SCREEN 1: START -->
+<div class="screen active" id="screen-start">
+  <div class="start-blob blob1"></div>
+  <div class="start-blob blob2"></div>
+  <div class="start-blob blob3"></div>
+  <div class="start-content fade-in">
+    <div class="start-badge">
+      <span class="dot"></span>
+      <span data-ru="Квиз для 7–11 классов" data-uz="7–11-sinf o'quvchilari uchun"></span>
+    </div>
+    <h1 class="start-hero">
+      <span data-ru="Навигатор" data-uz="Navigator" class="highlight"></span><br>
+      <span data-ru="будущего" data-uz="kelajagi" class="highlight2"></span>
+    </h1>
+    <p class="start-sub" data-ru="Пройди 20 вопросов и узнай, в каком направлении тебе лучше всего развиваться — в учебе и за её пределами."
+       data-uz="20 ta savolga javob ber va qaysi yo'nalishda rivojlanish sening uchun qiziqarli ekanini bilib ol."></p>
+
+    <div class="direction-pills">
+      <div class="direction-pill" style="color:var(--c1)"><span class="pill-emoji">💻</span><span data-ru="Технологии" data-uz="Texnologiya"></span></div>
+      <div class="direction-pill" style="color:var(--c2)"><span class="pill-emoji">🔬</span><span data-ru="Наука" data-uz="Fan"></span></div>
+      <div class="direction-pill" style="color:var(--c3)"><span class="pill-emoji">🎨</span><span data-ru="Творчество" data-uz="Ijodkorlik"></span></div>
+      <div class="direction-pill" style="color:var(--c4)"><span class="pill-emoji">🎤</span><span data-ru="Коммуникации" data-uz="Muloqot"></span></div>
+      <div class="direction-pill" style="color:var(--c5)"><span class="pill-emoji">🤝</span><span data-ru="Помощь" data-uz="Yordam"></span></div>
+      <div class="direction-pill" style="color:var(--c6)"><span class="pill-emoji">🔧</span><span data-ru="Практика" data-uz="Amaliyot"></span></div>
+    </div>
+
+    <div class="start-meta">
+      <div class="meta-item"><span class="meta-icon">❓</span><span data-ru="20 вопросов" data-uz="20 ta savol"></span></div>
+      <div class="meta-item"><span class="meta-icon">⏱️</span><span data-ru="4–6 минут" data-uz="4–6 daqiqa"></span></div>
+      <div class="meta-item"><span class="meta-icon">🎯</span><span data-ru="Топ-3 направления" data-uz="Top-3 yo'nalish"></span></div>
+    </div>
+
+    <button class="btn-primary" onclick="startQuiz()">
+      <span data-ru="Начать квиз" data-uz="Boshlamoq"></span>
+      <span class="arrow">→</span>
+    </button>
+    <p class="start-disclaimer" data-ru="Это не официальный психологический тест — просто дружелюбный квиз для ориентации"
+       data-uz="Bu rasmiy psixologik test emas — faqat yo'nalish topishga yordam beruvchi do'stona viktorina"></p>
+  </div>
+</div>
+
+<!-- SCREEN 2: QUIZ -->
+<div class="screen" id="screen-quiz">
+  <div class="quiz-wrap">
+    <div class="progress-area">
+      <div class="progress-header">
+        <span class="progress-label" data-ru="Твой прогресс" data-uz="Sizning natija"></span>
+        <span class="progress-count" id="progress-count">1 / 20</span>
+      </div>
+      <div class="progress-bar-bg">
+        <div class="progress-bar-fill" id="progress-bar" style="width:5%"></div>
+      </div>
+    </div>
+
+    <div class="question-card" id="question-card">
+      <div class="question-num" id="question-num">ВОПРОС 01</div>
+      <div class="question-text" id="question-text"></div>
+    </div>
+
+    <div class="scale-area">
+      <div class="scale-labels">
+        <span data-ru="Совсем не про меня" data-uz="Umuman men emas"></span>
+        <span data-ru="Очень про меня" data-uz="Bu men haqimda"></span>
+      </div>
+      <div class="scale-buttons" id="scale-buttons">
+        <button class="scale-btn" data-val="1" onclick="selectAnswer(1)">1</button>
+        <button class="scale-btn" data-val="2" onclick="selectAnswer(2)">2</button>
+        <button class="scale-btn" data-val="3" onclick="selectAnswer(3)">3</button>
+        <button class="scale-btn" data-val="4" onclick="selectAnswer(4)">4</button>
+        <button class="scale-btn" data-val="5" onclick="selectAnswer(5)">5</button>
+      </div>
+    </div>
+
+    <div class="quiz-nav" style="margin-top:28px">
+      <button class="btn-ghost" onclick="prevQuestion()" id="btn-prev" data-ru="← Назад" data-uz="← Orqaga"></button>
+      <button class="btn-next" id="btn-next" onclick="nextQuestion()" data-ru="Далее →" data-uz="Keyingisi →"></button>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 3: LOADING -->
+<div class="screen" id="screen-loading">
+  <div class="loading-content fade-in">
+    <div class="loading-animation">
+      <div class="loading-ring ring1"></div>
+      <div class="loading-ring ring2"></div>
+      <div class="loading-ring ring3"></div>
+      <div class="loading-emoji">🧭</div>
+    </div>
+    <h2 class="loading-title" data-ru="Собираем твой профиль..." data-uz="Profilingiz tuzilmoqda..."></h2>
+    <p class="loading-sub" data-ru="Анализируем твои ответы и подбираем самые подходящие направления"
+       data-uz="Javoblaringiz tahlil qilinmoqda va eng mos yo'nalishlar tanlanmoqda"></p>
+    <div class="loading-steps" id="loading-steps">
+      <div class="loading-step" id="step1">
+        <div class="step-icon">🔍</div>
+        <div class="step-label" data-ru="Анализируем интересы и предпочтения" data-uz="Qiziqishlar va afzalliklar tahlil qilinmoqda"></div>
+      </div>
+      <div class="loading-step" id="step2">
+        <div class="step-icon">⚡</div>
+        <div class="step-label" data-ru="Выявляем сильные стороны" data-uz="Kuchli tomonlar aniqlanmoqda"></div>
+      </div>
+      <div class="loading-step" id="step3">
+        <div class="step-icon">🎯</div>
+        <div class="step-label" data-ru="Подбираем топ-3 направления" data-uz="Top-3 yo'nalish tanlanmoqda"></div>
+      </div>
+    </div>
+    <div class="loading-dots">
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+      <div class="loading-dot"></div>
+    </div>
+  </div>
+</div>
+
+<!-- SCREEN 4: RESULT -->
+<div class="screen" id="screen-result">
+  <div class="result-wrap">
+    <div class="result-header fade-in">
+      <div class="result-badge">🎉 <span data-ru="Твой профиль готов!" data-uz="Profilez tayyor!"></span></div>
+      <h2 class="result-title" id="result-title-name"></h2>
+      <p class="result-sub" data-ru="Вот твои топ-3 направления — на основе твоих ответов"
+         data-uz="Mana sening javoblaring asosida top-3 yo'nalishing"></p>
+    </div>
+    <div class="result-cards" id="result-cards"></div>
+    <div class="result-actions">
+      <button class="btn-share" onclick="shareResult()">
+        <span>📤</span><span data-ru="Поделиться" data-uz="Ulashish"></span>
+      </button>
+      <button class="btn-restart" onclick="restart()">
+        <span>🔄</span><span data-ru="Пройти заново" data-uz="Qayta boshlash"></span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="share-toast" id="share-toast" data-ru="Результат скопирован в буфер обмена ✓" data-uz="Natija nusxalandi ✓"></div>
+
+<script>
+// ============================================================
+// DATA
+// ============================================================
+const DIRECTIONS = {
+  tech: {
+    id: 'tech',
+    emoji: '💻',
+    color: '#5B4FE9',
+    bg: 'rgba(91,79,233,0.1)',
+    questions: [1,7,13,19],
+    ru: {
+      name: 'Технологии и инженерия',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Тебе интересно понять, как устроены системы, программы и устройства — и ты хочешь не просто пользоваться, а создавать и улучшать. Это направление для тех, кто любит конструировать решения под реальные задачи.',
+      profs: ['Разработчик', 'Инженер', 'Системный архитектор', 'DevOps', 'Робототехник', 'Data-инженер'],
+      activities: ['Олимпиады по информатике', 'Проекты на Arduino/Raspberry Pi', 'Курсы программирования', 'Хакатоны'],
+    },
+    uz: {
+      name: 'Texnologiya va muhandislik',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Tizimlar, dasturlar va qurilmalar qanday ishlashini tushunish seni qiziqtiradi — faqat foydalanmasdan, yaratmoq va takomillashtirmoqchi bo\'lasan.',
+      profs: ['Dasturchi', 'Muhandis', 'Tizim arxitektori', 'DevOps', 'Robototexnik', 'Data muhandis'],
+      activities: ['Informatika olimpiadalari', 'Arduino/Raspberry Pi loyihalari', 'Dasturlash kurslari', 'Hakatonlar'],
+    }
+  },
+  science: {
+    id: 'science',
+    emoji: '🔬',
+    color: '#00B4D8',
+    bg: 'rgba(0,180,216,0.1)',
+    questions: [2,8,14,20],
+    ru: {
+      name: 'Наука и анализ',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Ты замечаешь закономерности там, где другие видят хаос. Тебе нравится копать глубже, сравнивать, искать причины — и делать выводы на основе фактов, а не ощущений.',
+      profs: ['Учёный-исследователь', 'Аналитик данных', 'Биолог', 'Физик', 'Экономист', 'UX-исследователь'],
+      activities: ['Научные конкурсы', 'Работа с данными и таблицами', 'Лабораторные опыты', 'Исследовательские проекты'],
+    },
+    uz: {
+      name: 'Fan va tahlil',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Boshqalar tartibsizlik ko\'rgan joyda siz qonuniyatlar topasiz. Chuqurroq qazish, taqqoslash, sabab izlash va faktlarga asoslangan xulosalar chiqarish seni qiziqtiradi.',
+      profs: ['Tadqiqotchi', 'Ma\'lumot tahlilchisi', 'Biolog', 'Fizik', 'Iqtisodchi', 'UX-tadqiqotchi'],
+      activities: ['Ilmiy tanlovlar', 'Ma\'lumotlar va jadvallar bilan ishlash', 'Laboratoriya tajribalari', 'Tadqiqot loyihalari'],
+    }
+  },
+  creative: {
+    id: 'creative',
+    emoji: '🎨',
+    color: '#FF6B6B',
+    bg: 'rgba(255,107,107,0.1)',
+    questions: [3,9,15],
+    ru: {
+      name: 'Творчество и медиа',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Тебе важно, чтобы результат не просто работал — он должен выглядеть интересно, необычно, иметь характер. Ты создаёшь своё, а не воспроизводишь чужое.',
+      profs: ['Дизайнер', 'Видеомейкер', 'Автор контента', 'Иллюстратор', 'Сценарист', 'Арт-директор'],
+      activities: ['Школьные медиапроекты', 'Дизайн-конкурсы', 'Создание видео и подкастов', 'Курсы по визуальным коммуникациям'],
+    },
+    uz: {
+      name: 'Ijodkorlik va media',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Natija nafaqat ishlashi, balki qiziqarli va g\'ayrioddiy ko\'rinishi kerak. Siz o\'z narsangizni yaratasiz, boshqasinikini takrorlamaysiz.',
+      profs: ['Dizayner', 'Videograf', 'Kontent muallifi', 'Illustrator', 'Ssenariychi', 'Art-direktor'],
+      activities: ['Maktab media loyihalari', 'Dizayn tanlovlari', 'Video va podkastlar yaratish', 'Vizual kommunikatsiya kurslari'],
+    }
+  },
+  comm: {
+    id: 'comm',
+    emoji: '🎤',
+    color: '#FF9F1C',
+    bg: 'rgba(255,159,28,0.1)',
+    questions: [5,11,17],
+    ru: {
+      name: 'Коммуникации и лидерство',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Тебе нравится говорить, убеждать, вести команды и находить решения в ситуациях, когда у всех разные мнения. Ты умеешь превращать хаос в согласие.',
+      profs: ['Менеджер проектов', 'Маркетолог', 'PR-специалист', 'Предприниматель', 'Юрист', 'Политик'],
+      activities: ['Дебаты и МУН', 'Студенческое самоуправление', 'Переговорные симуляции', 'Публичные выступления'],
+    },
+    uz: {
+      name: 'Muloqot va yetakchilik',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Gapirishni, ishontirishni, jamoani boshqarishni yoqtirasan. Har xil fikrlar to\'qnashganda esa yechim topish seni qiziqtiradi.',
+      profs: ['Loyiha menejeri', 'Marketolog', 'PR mutaxassisi', 'Tadbirkor', 'Huquqshunos', 'Siyosatchi'],
+      activities: ['Debatlar va MUN', 'Talabalar o\'z-o\'zini boshqarishi', 'Muzokaralar simulyatsiyasi', 'Ommaviy nutqlar'],
+    }
+  },
+  helping: {
+    id: 'helping',
+    emoji: '🤝',
+    color: '#06D6A0',
+    bg: 'rgba(6,214,160,0.1)',
+    questions: [4,10,16],
+    ru: {
+      name: 'Помощь людям и образование',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Ты получаешь удовольствие от того, что твои действия напрямую помогают другому человеку — объяснить, поддержать, направить. Для тебя важно, чтобы работа имела человеческий смысл.',
+      profs: ['Педагог', 'Психолог', 'Врач', 'Социальный работник', 'Тренер', 'Методист'],
+      activities: ['Волонтёрство', 'Тьюторство', 'Работа с младшими учениками', 'Курсы по коучингу'],
+    },
+    uz: {
+      name: 'Odamlarga yordam va ta\'lim',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Harakatlaringiz boshqa birovga bevosita yordam berganda zavq olasan — tushuntirish, qo\'llab-quvvatlash, yo\'naltirish. Ish insoniy ma\'noga ega bo\'lishi sening uchun muhim.',
+      profs: ['Pedagog', 'Psixolog', 'Shifokor', 'Ijtimoiy xodim', 'Murabbiy', 'Metodist'],
+      activities: ['Ko\'ngillililik', 'Tyutorlik', 'Kichik o\'quvchilar bilan ishlash', 'Kouching kurslari'],
+    }
+  },
+  practical: {
+    id: 'practical',
+    emoji: '🔧',
+    color: '#8338EC',
+    bg: 'rgba(131,56,236,0.1)',
+    questions: [6,12,18],
+    ru: {
+      name: 'Практика и прикладные задачи',
+      rank1: '🥇 Твоё главное направление',
+      rank2: '🥈 Сильный интерес',
+      rank3: '🥉 Заметный интерес',
+      desc: 'Ты предпочитаешь действие — пробовать, собирать, настраивать, применять. Тебе не нужно долго обсуждать, ты просто берёшь и делаешь. Видимый результат — это твоя мотивация.',
+      profs: ['Технолог производства', 'Механик', 'Электрик', 'Повар', 'Строитель', 'Операционный менеджер'],
+      activities: ['Мастерские и лаборатории', 'Соревнования по профессиям', 'Стажировки', 'Прикладные курсы'],
+    },
+    uz: {
+      name: 'Amaliyot va qo\'llanilgan vazifalar',
+      rank1: '🥇 Asosiy yo\'nalishing',
+      rank2: '🥈 Kuchli qiziqish',
+      rank3: '🥉 Sezilarli qiziqish',
+      desc: 'Harakat qilishni afzal ko\'rasan — sinab ko\'rmoq, yig\'moq, sozlamoq, qo\'llamoq. Uzoq muhokama kerak emas, shunchaki olasan va qilasan. Ko\'rinadigan natija — bu sening motivatsiyaing.',
+      profs: ['Ishlab chiqarish texnologi', 'Mexanik', 'Elektrik', 'Oshpaz', 'Quriluvchi', 'Operatsion menejer'],
+      activities: ['Ustaxona va laboratoriyalar', 'Kasbiy musobaqalar', 'Stajirovkalar', 'Amaliy kurslar'],
+    }
+  }
+};
+
+const QUESTIONS_RU = [
+  "Мне интересно понять, как устроена техника, программа или система — а не просто пользоваться ими.",
+  "Я часто замечаю закономерности, ошибки или несостыковки, которые другие могут пропустить.",
+  "Мне нравится придумывать необычные идеи, даже если они сначала кажутся странными.",
+  "Мне нравится момент, когда можно разложить сложную тему на простые шаги для другого человека.",
+  "Мне нравится ситуация, где нужно быстро решить, кто что делает, чтобы команда не застряла.",
+  "Мне приятнее делать дело, где в конце есть видимый практический результат.",
+  "Если что-то сломалось или работает не так, мне интересно разобраться самому(-ой), в чём причина.",
+  "Мне нравится не просто учить материал, а сравнивать версии, искать причины и делать выводы.",
+  "Мне важно, чтобы результат выглядел красиво, интересно или необычно — а не только правильно.",
+  "Я легче включаюсь в дело, если понимаю, что мой результат будет полезен конкретному человеку.",
+  "Мне комфортно договариваться между людьми, если у них разные мнения.",
+  "Я бы скорее выбрал(-а) задачу, где нужно собрать, настроить, проверить или применить что-то на практике.",
+  "В школьном проекте мне была бы интересна часть, где нужно придумать, как именно всё будет работать.",
+  "Мне нравится работать с результатами, наблюдениями, числами, таблицами или фактами.",
+  "Мне ближе задача создать что-то своё, чем аккуратно повторить готовый образец.",
+  "Мне интересны занятия, где нужно поддерживать, обучать, объяснять или быть полезным(-ой).",
+  "Мне нравится ситуация, где можно представить идею, повести за собой или защитить свою позицию.",
+  "Мне проще включиться в задачу, если можно сразу пробовать и делать, а не долго обсуждать.",
+  "Если бы можно было выбрать, я бы с интересом попробовал(-а) задачу, где нужно спроектировать решение под конкретную проблему.",
+  "Мне нравится задавать вопрос «почему это так работает?» и искать ответ глубже."
+];
+
+const QUESTIONS_UZ = [
+  "Texnika, dastur yoki tizim qanday ishlashini tushunish menga qiziq — faqat foydalanib emas.",
+  "Men ko'pincha boshqalar e'tibor bermagan qonuniyatlar, xatolar yoki nomuvofiqliklarni payqayman.",
+  "Men g'ayrioddiy g'oyalar o'ylab topishni yoqtiraman, hatto dastlab g'alati ko'rinsa ham.",
+  "Murakkab mavzuni boshqa birov uchun oddiy qadamlarga bo'lish mumkin bo'lgan paytni yaxshi ko'raman.",
+  "Jamoa qolib ketmasligi uchun kim nima qilishini tezda hal qilish kerak bo'lgan vaziyat menga yoqadi.",
+  "Oxirida ko'rinadigan amaliy natija bo'ladigan ish qilishni afzal ko'raman.",
+  "Biror narsa buzilsa yoki noto'g'ri ishlasa, sababini o'zim topishga harakat qilaman.",
+  "Materiallarni yod olishdan ko'ra, taqqoslash, sabab izlash va xulosalar chiqarishni yaxshi ko'raman.",
+  "Natija nafaqat to'g'ri, balki chiroyli, qiziqarli yoki g'ayrioddiy ko'rinishi menga muhim.",
+  "Ish natijam ma'lum bir insonга foydali bo'lishini bilsam, tezroq kirishaман.",
+  "Odamlar o'rtasida kelishuv topishga qulay his qilaman, hatto ular turli fikrda bo'lsa ham.",
+  "Biror narsani yig'ish, sozlash, tekshirish yoki amalda qo'llash kerak bo'lgan vazifani tanlagan bo'lardim.",
+  "Maktab loyihasida hamma narsa qanday ishlashini o'ylab topish kerak bo'lgan qism menga qiziqroq.",
+  "Natijalar, kuzatishlar, raqamlar, jadvallar yoki faktlar bilan ishlashni yoqtiraman.",
+  "Tayyor namunani takrorlashdan ko'ra, o'z narsamni yaratish menga yaqinroq.",
+  "Qo'llab-quvvatlash, o'qitish, tushuntirish yoki foydali bo'lish kerak bo'lgan mashg'ulotlar menga qiziqarli.",
+  "G'oyani taqdim etish, boshchilik qilish yoki pozitsiyamni himoya qila oladigan vaziyat menga yoqadi.",
+  "Uzoq muhokama qilmasdan darhol sinab ko'rib, ish boshlasam, vazifaga osonroq kirishaman.",
+  "Konkret muammo uchun yechim loyihalash kerak bo'lgan vazifani qiziqish bilan sinab ko'rgan bo'lardim.",
+  "«Bu nega shunday ishlaydi?» degan savol berish va chuqurroq javob izlash menga yoqadi."
+];
+
+// Map question index (0-based) to direction
+const Q_TO_DIR = ['tech','science','creative','helping','comm','practical','tech','science','creative','helping','comm','practical','tech','science','creative','helping','comm','practical','tech','science'];
+
+// ============================================================
+// STATE
+// ============================================================
+let currentLang = 'ru';
+let currentQ = 0;
+let answers = new Array(20).fill(null);
+let selectedVal = null;
+
+// ============================================================
+// LANG
+// ============================================================
+function setLang(lang) {
+  currentLang = lang;
+  document.getElementById('btn-ru').classList.toggle('active', lang === 'ru');
+  document.getElementById('btn-uz').classList.toggle('active', lang === 'uz');
+  document.querySelectorAll('[data-ru]').forEach(el => {
+    el.textContent = lang === 'ru' ? el.getAttribute('data-ru') : el.getAttribute('data-uz');
+  });
+  if (document.getElementById('screen-quiz').classList.contains('active')) {
+    renderQuestion();
+  }
+}
+
+function t(el, key) {
+  return el[currentLang][key];
+}
+
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function startQuiz() {
+  currentQ = 0;
+  answers = new Array(20).fill(null);
+  showScreen('screen-quiz');
+  renderQuestion();
+  setLang(currentLang);
+}
+
+function restart() {
+  showScreen('screen-start');
+  setLang(currentLang);
+}
+
+// ============================================================
+// QUIZ LOGIC
+// ============================================================
+function renderQuestion() {
+  const q = currentQ;
+  const text = currentLang === 'ru' ? QUESTIONS_RU[q] : QUESTIONS_UZ[q];
+  const numLabel = currentLang === 'ru' ? `ВОПРОС ${String(q+1).padStart(2,'0')}` : `SAVOL ${String(q+1).padStart(2,'0')}`;
+
+  document.getElementById('question-num').textContent = numLabel;
+  document.getElementById('question-text').textContent = text;
+
+  const pct = Math.round(((q + 1) / 20) * 100);
+  document.getElementById('progress-bar').style.width = `${Math.max(5, pct)}%`;
+  document.getElementById('progress-count').textContent = `${q+1} / 20`;
+
+  selectedVal = answers[q];
+  document.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.val) === selectedVal);
+  });
+
+  const btnNext = document.getElementById('btn-next');
+  btnNext.classList.toggle('enabled', selectedVal !== null);
+  btnNext.textContent = currentLang === 'ru' ? 'Далее →' : 'Keyingisi →';
+
+  const btnPrev = document.getElementById('btn-prev');
+  btnPrev.textContent = currentLang === 'ru' ? '← Назад' : '← Orqaga';
+  btnPrev.style.visibility = q === 0 ? 'hidden' : 'visible';
+
+  // Card animation
+  const card = document.getElementById('question-card');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  card.style.animation = '';
+}
+
+function selectAnswer(val) {
+  selectedVal = val;
+  answers[currentQ] = val;
+  document.querySelectorAll('.scale-btn').forEach(btn => {
+    btn.classList.toggle('selected', parseInt(btn.dataset.val) === val);
+  });
+  document.getElementById('btn-next').classList.add('enabled');
+
+  // Auto-advance after short delay
+  setTimeout(() => {
+    if (currentQ < 19) nextQuestion();
+    else finishQuiz();
+  }, 350);
+}
+
+function nextQuestion() {
+  if (selectedVal === null) return;
+  if (currentQ < 19) {
+    currentQ++;
+    renderQuestion();
+  } else {
+    finishQuiz();
+  }
+}
+
+function prevQuestion() {
+  if (currentQ > 0) {
+    currentQ--;
+    renderQuestion();
+  }
+}
+
+// ============================================================
+// SCORING
+// ============================================================
+function computeScores() {
+  const scores = {};
+  Object.keys(DIRECTIONS).forEach(k => scores[k] = 0);
+
+  Q_TO_DIR.forEach((dir, i) => {
+    if (answers[i] !== null) scores[dir] += answers[i];
+  });
+
+  // Normalize to percentage (max per direction = questions * 5)
+  const maxScores = {};
+  Object.keys(DIRECTIONS).forEach(k => {
+    maxScores[k] = DIRECTIONS[k].questions.length * 5;
+    scores[k] = Math.round((scores[k] / maxScores[k]) * 100);
+  });
+
+  return scores;
+}
+
+function finishQuiz() {
+  showScreen('screen-loading');
+  setLang(currentLang);
+
+  const steps = ['step1','step2','step3'];
+  steps.forEach((id, i) => {
+    const el = document.getElementById(id);
+    el.classList.remove('visible','done');
+    setTimeout(() => { el.classList.add('visible'); }, (i+1)*700);
+    setTimeout(() => { el.classList.add('done'); }, (i+1)*700+400);
+  });
+
+  setTimeout(() => {
+    showResult();
+  }, 3200);
+}
+
+function showResult() {
+  const scores = computeScores();
+  const sorted = Object.keys(scores).sort((a,b) => scores[b] - scores[a]);
+  const top3 = sorted.slice(0,3);
+
+  showScreen('screen-result');
+  setLang(currentLang);
+
+  // Title
+  const titleEl = document.getElementById('result-title-name');
+  titleEl.textContent = currentLang === 'ru' ? `Твой профиль: ${DIRECTIONS[top3[0]][currentLang].name}` : `Sening profiling: ${DIRECTIONS[top3[0]][currentLang].name}`;
+
+  const container = document.getElementById('result-cards');
+  container.innerHTML = '';
+
+  top3.forEach((dirKey, idx) => {
+    const dir = DIRECTIONS[dirKey];
+    const info = dir[currentLang];
+    const pct = scores[dirKey];
+
+    const rankKeys = ['rank1','rank2','rank3'];
+    const card = document.createElement('div');
+    card.className = 'result-card';
+
+    card.innerHTML = `
+      <div class="result-card-accent" style="background:${dir.color}"></div>
+      <div class="result-card-inner">
+        <div class="result-rank" style="color:${dir.color}">${info[rankKeys[idx]]}</div>
+        <div class="result-dir-header">
+          <div class="result-dir-emoji" style="background:${dir.bg}">${dir.emoji}</div>
+          <div class="result-dir-info">
+            <div class="result-dir-name">${info.name}</div>
+            <div class="result-dir-pct" style="color:${dir.color}">${pct}% ${currentLang==='ru'?'выраженности':'ko\'rsatkich'}</div>
+          </div>
+        </div>
+        <div class="result-bar-bg"><div class="result-bar-fill" data-pct="${pct}" style="background:${dir.color}"></div></div>
+        <p class="result-desc">${info.desc}</p>
+        <div class="result-section-title">${currentLang==='ru'?'Примеры профессий':'Kasblar misollari'}</div>
+        <div class="result-professions">${info.profs.map(p=>`<span class="profession-tag">${p}</span>`).join('')}</div>
+        <div class="result-section-title" style="margin-top:14px">${currentLang==='ru'?'Форматы активности':'Faoliyat formatlari'}</div>
+        <div class="result-activities">${info.activities.map(a=>`<span class="activity-tag" style="background:${dir.color}">${a}</span>`).join('')}</div>
+      </div>`;
+
+    container.appendChild(card);
+
+    // Animate in
+    setTimeout(() => {
+      card.classList.add('visible');
+      setTimeout(() => {
+        const fill = card.querySelector('.result-bar-fill');
+        fill.style.width = fill.dataset.pct + '%';
+      }, 200);
+    }, idx * 200 + 100);
+  });
+
+  // Save to localStorage
+  try {
+    const result = { scores, top3, lang: currentLang, date: new Date().toISOString() };
+    localStorage.setItem('emaktab_navigator_result', JSON.stringify(result));
+    // postMessage for external integration
+    window.parent?.postMessage({ type: 'emaktab_quiz_result', data: result }, '*');
+  } catch(e) {}
+}
+
+// ============================================================
+// SHARE
+// ============================================================
+function shareResult() {
+  const scores = computeScores();
+  const sorted = Object.keys(scores).sort((a,b) => scores[b] - scores[a]);
+  const top3 = sorted.slice(0,3);
+  const text = top3.map((k,i) => `${i+1}. ${DIRECTIONS[k][currentLang].name} — ${scores[k]}%`).join('\n');
+  const shareText = currentLang === 'ru'
+    ? `Мой профиль в квизе «Навигатор будущего» (eMaktab):\n${text}\n\nПройди сам: ${window.location.href}`
+    : `Mening "Kelajak navigatori" viktorinasidagi profilim (eMaktab):\n${text}\n\nO'zing sinab ko'r: ${window.location.href}`;
+
+  if (navigator.share) {
+    navigator.share({ title: 'Навигатор будущего | eMaktab', text: shareText });
+  } else {
+    navigator.clipboard.writeText(shareText).then(() => {
+      const toast = document.getElementById('share-toast');
+      toast.textContent = currentLang === 'ru' ? 'Результат скопирован в буфер обмена ✓' : 'Natija nusxalandi ✓';
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    });
+  }
+}
+
+// ============================================================
+// INIT
+// ============================================================
+setLang('ru');
+</script>
+</body>
+</html>
