@@ -623,6 +623,152 @@
       transform:translateX(-50%) translateY(0)
     }
 
+
+.result-hero{
+  background:linear-gradient(160deg,#fff 0%,#F7F5FF 60%,#FFF9F4 100%);
+  border:1px solid rgba(91,79,233,.08)
+}
+.result-kicker{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(91,79,233,.08);
+  color:var(--primary);
+  border-radius:999px;
+  padding:8px 14px;
+  font-size:.8rem;
+  font-weight:800;
+  margin-bottom:16px
+}
+.result-arch-title{
+  font-size:clamp(1.5rem,4vw,2.15rem);
+  font-weight:900;
+  letter-spacing:-.8px;
+  margin-bottom:12px
+}
+.result-arch-summary{
+  font-size:1rem;
+  line-height:1.7;
+  color:var(--text2);
+  margin-bottom:18px
+}
+.signal-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px
+}
+.signal-chip{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  background:#fff;
+  border:1px solid #E8E6F8;
+  border-radius:999px;
+  font-size:.86rem;
+  font-weight:800;
+  color:var(--text)
+}
+.signal-chip span{
+  color:var(--text2);
+  font-weight:700
+}
+.insight-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px
+}
+.insight-item{
+  background:#FAF9FF;
+  border:1px solid #ECEAFD;
+  border-radius:18px;
+  padding:18px
+}
+.insight-item.highlight{
+  background:linear-gradient(180deg,#F8F7FF 0%,#FFFFFF 100%)
+}
+.insight-title{
+  font-size:.8rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+  color:var(--text3);
+  margin-bottom:8px
+}
+.insight-text{
+  font-size:.95rem;
+  line-height:1.65;
+  color:var(--text)
+}
+.track-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+  margin-bottom:18px
+}
+.track-card{
+  border-radius:18px;
+  padding:18px;
+  border:1px solid #ECEAFD;
+  background:#FAF9FF
+}
+.track-card.primary{
+  background:linear-gradient(165deg,#F6F4FF 0%,#FFFFFF 100%);
+  border-color:rgba(91,79,233,.18)
+}
+.track-label{
+  font-size:.75rem;
+  font-weight:900;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  color:var(--text3);
+  margin-bottom:10px
+}
+.track-name{
+  font-size:1.08rem;
+  font-weight:900;
+  margin-bottom:8px
+}
+.track-text{
+  font-size:.93rem;
+  color:var(--text2);
+  line-height:1.65
+}
+.section-stack{
+  display:grid;
+  gap:14px
+}
+.plain-list{
+  list-style:none;
+  display:grid;
+  gap:10px
+}
+.plain-list li{
+  position:relative;
+  padding-left:18px;
+  font-size:.93rem;
+  line-height:1.55;
+  color:var(--text)
+}
+.plain-list li::before{
+  content:'•';
+  position:absolute;
+  left:0;
+  top:0;
+  color:var(--primary);
+  font-weight:900
+}
+.helper-note{
+  margin-top:10px;
+  font-size:.82rem;
+  color:var(--text3)
+}
+
+    @media(max-width:860px){
+      .insight-grid,
+      .track-grid{grid-template-columns:1fr}
+    }
+
     @media(max-width:600px){
       .brand-logo{height:30px}
       .hero-logo{height:64px}
@@ -746,23 +892,23 @@
   </div>
 
   <div class="screen" id="screen-result">
-    <div class="result-wrap">
-      <div class="result-header">
-        <div class="result-badge">🎉 <span data-ru="Твой профиль готов!" data-uz="Sening profiling tayyor!"></span></div>
-        <h2 class="result-title" id="result-title-name"></h2>
-        <p class="result-sub"
-           data-ru="Ниже — одна основная рекомендация по образовательному треку и направлениям, которые тебе могут подойти."
-           data-uz="Quyida senga mos kelishi mumkin bo‘lgan ta’lim treki va yo‘nalishlar bo‘yicha bitta asosiy tavsiya berilgan."></p>
-      </div>
+  <div class="result-wrap">
+    <div class="result-header">
+      <div class="result-badge">🎉 <span data-ru="Твой профиль готов!" data-uz="Sening profiling tayyor!"></span></div>
+      <h2 class="result-title" id="result-title-name"></h2>
+      <p class="result-sub" id="result-subtitle"
+         data-ru="Ниже — твой архетип, основной образовательный трек и практические шаги, с которых можно начать."
+         data-uz="Quyida — sening arxetiping, asosiy ta’lim treking va darhol boshlab ko‘rish mumkin bo‘lgan amaliy qadamlar bor."></p>
+    </div>
 
-      <div id="result-cards"></div>
+    <div id="result-cards"></div>
 
-      <div class="result-actions">
-        <button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button>
-        <button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button>
-      </div>
+    <div class="result-actions">
+      <button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button>
+      <button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button>
     </div>
   </div>
+</div>
 
   <div class="share-toast" id="share-toast"></div>
 
@@ -955,39 +1101,57 @@
     ];
 
     const LABELS = {
-      ru:{
-        scale:['Совсем не про меня','Очень похоже на меня'],
-        prev:'← Назад',
-        next:'Далее →',
-        finish:'Показать результат →',
-        types:{scale:'Шкальный вопрос',forced:'Выбор из двух',scenario:'Сценарий'},
-        share:'Мой результат в тесте «Навигатор будущего»:\n',
-        resultPrefix:'Твой профиль: ',
-        percent:'выраженности',
-        trackTitle:'Рекомендованный трек',
-        whyTitle:'Почему этот трек может подойти',
-        dirsTitle:'Подходящие направления',
-        altTitle:'Что еще можно рассмотреть',
-        instTitle:'Примеры учреждений',
-        copied:'Результат скопирован ✓'
-      },
-      uz:{
-        scale:['Umuman men haqimda emas','Bu menga juda o‘xshaydi'],
-        prev:'← Orqaga',
-        next:'Keyingisi →',
-        finish:'Natijani ko‘rsatish →',
-        types:{scale:'Shkalali savol',forced:'Ikki variantdan tanlash',scenario:'Ssenariy'},
-        share:'“Kelajak navigatori” testidagi natijam:\n',
-        resultPrefix:'Sening profiling: ',
-        percent:'moslik',
-        trackTitle:'Tavsiya etilgan trek',
-        whyTitle:'Nega bu trek mos kelishi mumkin',
-        dirsTitle:'Mos yo‘nalishlar',
-        altTitle:'Yana nimalarni ko‘rib chiqish mumkin',
-        instTitle:'Muassasa misollari',
-        copied:'Natija nusxalandi ✓'
-      }
-    };
+  ru:{
+    scale:['Совсем не про меня','Очень похоже на меня'],
+    prev:'← Назад',
+    next:'Далее →',
+    finish:'Показать результат →',
+    types:{scale:'Шкальный вопрос',forced:'Выбор из двух',scenario:'Сценарий'},
+    share:'Мой результат в тесте «Навигатор будущего»:\n',
+    resultHeroPrefix:'Ты — ',
+    resultSubtitle:'Ниже — твой архетип, основной образовательный трек и практические шаги, с которых можно начать.',
+    mainSignal:'Основной сигнал',
+    secondSignal:'Второй вектор',
+    strongSignal:'сильный сигнал',
+    expressedSignal:'выраженный интерес',
+    notableSignal:'заметный вектор',
+    bestAtTitle:'Что у тебя получается лучше всего',
+    boredTitle:'Где тебе может стать скучно',
+    formatTitle:'Какой формат обучения тебе подходит',
+    primaryTrackTitle:'Основной трек',
+    secondaryTrackTitle:'Смежный путь',
+    importantSubjectsTitle:'Какие предметы сейчас важнее',
+    environmentTitle:'Какую среду искать',
+    institutionsTitle:'Примеры школ / классов / колледжей',
+    nextStepsTitle:'Что попробовать уже в этом году',
+    copied:'Результат скопирован ✓'
+  },
+  uz:{
+    scale:['Umuman men haqimda emas','Bu menga juda o‘xshaydi'],
+    prev:'← Orqaga',
+    next:'Keyingisi →',
+    finish:'Natijani ko‘rsatish →',
+    types:{scale:'Shkalali savol',forced:'Ikki variantdan tanlash',scenario:'Ssenariy'},
+    share:'“Kelajak navigatori” testidagi natijam:\n',
+    resultHeroPrefix:'Sen — ',
+    resultSubtitle:'Quyida — sening arxetiping, asosiy ta’lim treking va darhol boshlab ko‘rish mumkin bo‘lgan amaliy qadamlar bor.',
+    mainSignal:'Asosiy signal',
+    secondSignal:'Ikkinchi vektor',
+    strongSignal:'kuchli signal',
+    expressedSignal:'aniq qiziqish',
+    notableSignal:'sezilarli vektor',
+    bestAtTitle:'Senda nimasi yaxshiroq chiqadi',
+    boredTitle:'Qayerda zerikib qolishing mumkin',
+    formatTitle:'Qaysi ta’lim formati senga mos',
+    primaryTrackTitle:'Asosiy trek',
+    secondaryTrackTitle:'Yondosh yo‘l',
+    importantSubjectsTitle:'Hozir qaysi fanlar muhimroq',
+    environmentTitle:'Qanday muhitni izlash kerak',
+    institutionsTitle:'Mos maktab / sinf / kollej misollari',
+    nextStepsTitle:'Shu yil nimalarni sinab ko‘rish mumkin',
+    copied:'Natija nusxalandi ✓'
+  }
+};
 
     let currentLang='ru';
     let currentQ=0;
@@ -1130,6 +1294,90 @@
       return {raw,max,pct};
     }
 
+
+
+    const TRACKS = {
+      academic: {
+        ru: {name:'Академическое образование', summary:'Подойдёт, если интересно глубже изучать профильные предметы, строить фундамент и готовиться к поступлению в вуз.'},
+        uz: {name:'Akademik ta’lim', summary:'Profil fanlarini chuqurroq o‘rganish, mustahkam baza yig‘ish va oliygohga tayyorgarlik uchun mos yo‘l.'}
+      },
+      professional: {
+        ru: {name:'Профессиональное образование', summary:'Подойдёт, если ближе практика, конкретные навыки и результат, который можно применить уже в ближайшее время.'},
+        uz: {name:'Professional ta’lim', summary:'Amaliy ko‘nikmalar, aniq vazifalar va yaqin muddatda qo‘llash mumkin bo‘lgan natija uchun mos yo‘l.'}
+      },
+      general: {
+        ru: {name:'Общее образование', summary:'Подойдёт, если важно сохранить широкий выбор и развивать сильные стороны без ранней узкой специализации.'},
+        uz: {name:'Umumiy ta’lim', summary:'Keng tanlovni saqlab qolish va erta tor ixtisoslashmasdan kuchli tomonlarni rivojlantirish uchun mos yo‘l.'}
+      }
+    };
+
+    function normalizeTrackName(name){
+      const v=(name||'').toLowerCase();
+      if(v.includes('профессион') || v.includes('professional')) return 'professional';
+      if(v.includes('академ') || v.includes('akadem')) return 'academic';
+      return 'general';
+    }
+
+    function getSignalTone(delta,level){
+      const l=LABELS[currentLang];
+      if(delta>=12) return l.strongSignal;
+      if(delta>=5 || level===0) return l.expressedSignal;
+      return l.notableSignal;
+    }
+
+    function renderTagList(items,colored){
+      return items.map(item=>`<span class="result-tag ${colored?'colored':''}" ${colored?`style="background:${item.color}"`:''}>${item.text}</span>`).join('');
+    }
+
+    function renderPlainList(items){
+      return `<ul class="plain-list">${items.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+    }
+
+    function buildResultModel(){
+      const {pct}=computeScores();
+      const sorted=Object.keys(pct).sort((a,b)=>pct[b]-pct[a]);
+      const [top1,top2,top3]=[sorted[0],sorted[1],sorted[2]];
+
+      const primaryDir=DIRECTIONS[top1][currentLang];
+      const secondaryDir=DIRECTIONS[top2][currentLang];
+
+      const primaryTrack=normalizeTrackName(primaryDir.recommendedTrack);
+      const secondaryTrack=normalizeTrackName(primaryDir.alternativeTrack);
+
+      return {
+        pct,
+        top1,
+        top2,
+        top3,
+        archetype:{
+          title:primaryDir.name,
+          summary:primaryDir.whyTrack
+        },
+        insights:{
+          best:`${primaryDir.name}: ${primaryDir.directions.slice(0,3).join(', ')}`,
+          bored: currentLang==='ru'
+            ? `Сложно без задач из ${primaryDir.directions[0].toLowerCase()} и активностей с практической пользой.`
+            : `${primaryDir.directions[0]} bo‘yicha amaliy vazifalarsiz motivatsiya pasayishi mumkin.`,
+          format:primaryDir.whyTrack
+        },
+        tracks:{
+          primary:primaryTrack,
+          secondary:secondaryTrack
+        },
+        subjects:primaryDir.directions.slice(0,6).map(text=>({text,color:DIRECTIONS[top1].color})),
+        environment:{
+          title:LABELS[currentLang].environmentTitle,
+          items:primaryDir.institutions.slice(0,4),
+          note: currentLang==='ru' ? `Смежный вектор: ${secondaryDir.name}.` : `Yondosh vektor: ${secondaryDir.name}.`
+        },
+        nextSteps:[
+          {text: currentLang==='ru' ? `Выбери мини-проект в направлении «${primaryDir.directions[0]}»` : `“${primaryDir.directions[0]}” yo‘nalishida mini-loyiha tanla`, color:DIRECTIONS[top1].color},
+          {text: currentLang==='ru' ? 'Поговори с наставником или учителем о следующем шаге' : 'Ustoz yoki o‘qituvchi bilan keyingi qadamni muhokama qil', color:DIRECTIONS[top2].color},
+          {text: currentLang==='ru' ? `Попробуй активность из смежного направления «${secondaryDir.name}»` : `Yondosh “${secondaryDir.name}” yo‘nalishidan bir faoliyatni sinab ko‘r`, color:DIRECTIONS[top3].color}
+        ]
+      };
+    }
+
     function finishTest(){
       showScreen('screen-loading');
 
@@ -1144,101 +1392,135 @@
     }
 
     function showResult(){
-      const {pct}=computeScores();
-      const primary=Object.keys(pct).sort((a,b)=>pct[b]-pct[a])[0];
-      const d=DIRECTIONS[primary];
-      const i=d[currentLang];
-      const l=LABELS[currentLang];
+  const model=buildResultModel();
+  const l=LABELS[currentLang];
+  const top1=DIRECTIONS[model.top1];
+  const top2=DIRECTIONS[model.top2];
+  const archetypeColor = top1.color;
 
-      showScreen('screen-result');
-      document.getElementById('result-title-name').textContent = l.resultPrefix + i.name;
+  showScreen('screen-result');
+  document.getElementById('result-title-name').textContent = l.resultHeroPrefix + model.archetype.title;
+  document.getElementById('result-subtitle').textContent = l.resultSubtitle;
 
-      const c=document.getElementById('result-cards');
-      c.innerHTML='';
+  const c=document.getElementById('result-cards');
+  c.innerHTML='';
 
-      const card=document.createElement('div');
-      card.className='result-card';
-      card.innerHTML=`
-        <div class="result-card-accent" style="background:${d.color}"></div>
-        <div class="result-card-inner">
-          <div class="result-rank" style="color:${d.color}">${i.rank}</div>
-
-          <div class="result-dir-header">
-            <div class="result-dir-emoji" style="background:${d.bg}">${d.emoji}</div>
-            <div>
-              <div class="result-dir-name">${i.name}</div>
-              <div class="result-dir-pct" style="color:${d.color}">${pct[primary]}% ${l.percent}</div>
-            </div>
-          </div>
-
-          <div class="result-bar-bg">
-            <div class="result-bar-fill" style="background:${d.color};width:${pct[primary]}%"></div>
-          </div>
-
-          <div class="result-section">
-            <div class="result-section-title">${l.trackTitle}</div>
-            <p class="result-desc"><strong>${i.recommendedTrack}</strong></p>
-          </div>
-
-          <div class="result-section">
-            <div class="result-section-title">${l.whyTitle}</div>
-            <p class="result-desc">${i.whyTrack}</p>
-          </div>
-
-          <div class="result-section">
-            <div class="result-section-title">${l.dirsTitle}</div>
-            <div class="result-tags">
-              ${i.directions.map(x=>`<span class="result-tag">${x}</span>`).join('')}
-            </div>
-          </div>
-
-          <div class="result-section">
-            <div class="result-section-title">${l.altTitle}</div>
-            <p class="result-desc"><strong>${i.alternativeTrack}</strong><br>${i.alternativeWhy}</p>
-          </div>
-
-          <div class="result-section">
-            <div class="result-section-title">${l.instTitle}</div>
-            <div class="result-tags">
-              ${i.institutions.map(x=>`<span class="result-tag colored" style="background:${d.color}">${x}</span>`).join('')}
-            </div>
-          </div>
+  const cardsMarkup = [
+    `
+    <div class="result-card result-hero">
+      <div class="result-kicker">🧭 ${l.resultHeroPrefix}${model.archetype.title}</div>
+      <div class="result-dir-header">
+        <div class="result-dir-emoji" style="background:${top1.bg}">${top1.emoji}</div>
+        <div>
+          <div class="result-dir-name">${model.archetype.title.charAt(0).toUpperCase() + model.archetype.title.slice(1)}</div>
+          <div class="result-dir-pct" style="color:${archetypeColor}">${model.archetype.summary}</div>
         </div>
-      `;
+      </div>
+      <p class="result-arch-summary">${model.archetype.summary}</p>
+      <div class="signal-row">
+        <div class="signal-chip">🧭 ${l.mainSignal}: <span>${DIRECTIONS[model.top1][currentLang].name} — ${getSignalTone(model.pct[model.top1]-model.pct[model.top2],0)}</span></div>
+        <div class="signal-chip">✨ ${l.secondSignal}: <span>${DIRECTIONS[model.top2][currentLang].name} — ${getSignalTone(model.pct[model.top2]-model.pct[model.top3],1)}</span></div>
+      </div>
+    </div>
+    `,
+    `
+    <div class="result-card">
+      <div class="insight-grid">
+        <div class="insight-item highlight">
+          <div class="insight-title">${l.bestAtTitle}</div>
+          <div class="insight-text">${model.insights.best}</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-title">${l.boredTitle}</div>
+          <div class="insight-text">${model.insights.bored}</div>
+        </div>
+        <div class="insight-item">
+          <div class="insight-title">${l.formatTitle}</div>
+          <div class="insight-text">${model.insights.format}</div>
+        </div>
+      </div>
+    </div>
+    `,
+    `
+    <div class="result-card">
+      <div class="track-grid">
+        <div class="track-card primary">
+          <div class="track-label">${l.primaryTrackTitle}</div>
+          <div class="track-name">${TRACKS[model.tracks.primary][currentLang].name}</div>
+          <div class="track-text">${TRACKS[model.tracks.primary][currentLang].summary}</div>
+        </div>
+        <div class="track-card">
+          <div class="track-label">${l.secondaryTrackTitle}</div>
+          <div class="track-name">${TRACKS[model.tracks.secondary][currentLang].name}</div>
+          <div class="track-text">${TRACKS[model.tracks.secondary][currentLang].summary}</div>
+        </div>
+      </div>
 
-      c.appendChild(card);
-      setTimeout(()=>card.classList.add('visible'),50);
+      <div class="section-stack">
+        <div class="result-section">
+          <div class="result-section-title">${l.importantSubjectsTitle}</div>
+          <div class="result-tags">${renderTagList(model.subjects,false)}</div>
+        </div>
 
-      try{
-        localStorage.setItem('emaktab_navigator_result_v4',JSON.stringify({
-          primary,
-          pct,
-          answers,
-          date:new Date().toISOString()
-        }));
-      }catch(e){}
-    }
+        <div class="result-section">
+          <div class="result-section-title">${model.environment.title}</div>
+          ${renderPlainList(model.environment.items)}
+          ${model.environment.note ? `<div class="helper-note">${model.environment.note}</div>` : ''}
+        </div>
 
-    function shareResult(){
-      const {pct}=computeScores();
-      const primary=Object.keys(pct).sort((a,b)=>pct[b]-pct[a])[0];
-      const d=DIRECTIONS[primary];
-      const i=d[currentLang];
-      const l=LABELS[currentLang];
+        <div class="result-section">
+          <div class="result-section-title">${l.nextStepsTitle}</div>
+          <div class="result-tags">${renderTagList(model.nextSteps,true)}</div>
+        </div>
+      </div>
+    </div>
+    `
+  ];
 
-      const text = l.share + `${i.name} — ${pct[primary]}%\n${l.trackTitle}: ${i.recommendedTrack}`;
+  cardsMarkup.forEach((markup,index)=>{
+    const node=document.createElement('div');
+    node.innerHTML=markup.trim();
+    const card=node.firstElementChild;
+    c.appendChild(card);
+    setTimeout(()=>card.classList.add('visible'),80 + index*90);
+  });
 
-      if(navigator.share){
-        navigator.share({title:'Навигатор будущего',text});
-      }else if(navigator.clipboard){
-        navigator.clipboard.writeText(text).then(()=>{
-          const t=document.getElementById('share-toast');
-          t.textContent=l.copied;
-          t.classList.add('show');
-          setTimeout(()=>t.classList.remove('show'),2200);
-        });
-      }
-    }
+  try{
+    localStorage.setItem('emaktab_navigator_result_v5',JSON.stringify({
+      archetype:model.archetype.title,
+      primaryDirection:model.top1,
+      secondaryDirection:model.top2,
+      primaryTrack:model.tracks.primary,
+      secondaryTrack:model.tracks.secondary,
+      pct:model.pct,
+      answers,
+      date:new Date().toISOString()
+    }));
+  }catch(e){}
+}
+
+function shareResult(){
+  const model=buildResultModel();
+  const l=LABELS[currentLang];
+
+  const text = [
+    l.share + `${l.resultHeroPrefix}${model.archetype.title}`,
+    `${l.mainSignal}: ${DIRECTIONS[model.top1][currentLang].name}`,
+    `${l.secondSignal}: ${DIRECTIONS[model.top2][currentLang].name}`,
+    `${l.primaryTrackTitle}: ${TRACKS[model.tracks.primary][currentLang].name}`
+  ].join('\\n');
+
+  if(navigator.share){
+    navigator.share({title:'Навигатор будущего',text});
+  }else if(navigator.clipboard){
+    navigator.clipboard.writeText(text).then(()=>{
+      const t=document.getElementById('share-toast');
+      t.textContent=l.copied;
+      t.classList.add('show');
+      setTimeout(()=>t.classList.remove('show'),2200);
+    });
+  }
+}
 
     setLang('ru');
   </script>
