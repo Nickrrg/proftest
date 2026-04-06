@@ -1123,7 +1123,6 @@
     importantSubjectsTitle:'Какие предметы сейчас важнее',
     environmentTitle:'Какую среду искать',
     institutionsTitle:'Примеры школ / классов / колледжей',
-    nextStepsTitle:'Что попробовать уже в этом году',
     copied:'Результат скопирован ✓'
   },
   uz:{
@@ -1148,7 +1147,6 @@
     importantSubjectsTitle:'Hozir qaysi fanlar muhimroq',
     environmentTitle:'Qanday muhitni izlash kerak',
     institutionsTitle:'Mos maktab / sinf / kollej misollari',
-    nextStepsTitle:'Shu yil nimalarni sinab ko‘rish mumkin',
     copied:'Natija nusxalandi ✓'
   }
 };
@@ -1358,7 +1356,9 @@
           bored: currentLang==='ru'
             ? `Сложно без задач из ${primaryDir.directions[0].toLowerCase()} и активностей с практической пользой.`
             : `${primaryDir.directions[0]} bo‘yicha amaliy vazifalarsiz motivatsiya pasayishi mumkin.`,
-          format:primaryDir.whyTrack
+          format: currentLang==='ru'
+            ? `Основной формат: ${TRACKS[primaryTrack].ru.name}. Смежный путь: ${TRACKS[secondaryTrack].ru.name}.`
+            : `Asosiy format: ${TRACKS[primaryTrack].uz.name}. Yondosh yo‘l: ${TRACKS[secondaryTrack].uz.name}.`
         },
         tracks:{
           primary:primaryTrack,
@@ -1468,10 +1468,6 @@
           ${model.environment.note ? `<div class="helper-note">${model.environment.note}</div>` : ''}
         </div>
 
-        <div class="result-section">
-          <div class="result-section-title">${l.nextStepsTitle}</div>
-          <div class="result-tags">${renderTagList(model.nextSteps,true)}</div>
-        </div>
       </div>
     </div>
     `
