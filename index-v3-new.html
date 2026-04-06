@@ -55,7 +55,7 @@
       <div class="start-meta">
         <div class="meta-item">❓ <span data-ru="24 вопроса" data-uz="24 ta savol"></span></div>
         <div class="meta-item">⏱️ <span data-ru="5–7 минут" data-uz="5–7 daqiqa"></span></div>
-        <div class="meta-item">🎯 <span data-ru="1 персональная рекомендация" data-uz="1 ta shaxsiy tavsiya"></span></div>
+        <div class="meta-item">🎯 <span data-ru="Топ-3 направления" data-uz="Top-3 yo‘nalish"></span></div>
       </div>
       <button class="btn-primary" onclick="startTest()"><span data-ru="Пройти тест" data-uz="Testni boshlash"></span><span>→</span></button>
       <p class="start-disclaimer" data-ru="Это не официальный психологический тест — это дружелюбный ориентир." data-uz="Bu rasmiy psixologik test emas, balki do‘stona yo‘naltiruvchi testdir."></p>
@@ -71,11 +71,11 @@
   </div>
 
   <div class="screen" id="screen-loading">
-    <div class="loading-content"><div class="loading-animation"><div class="loading-ring ring1"></div><div class="loading-ring ring2"></div><div class="loading-ring ring3"></div><div class="loading-emoji">🧭</div></div><h2 class="loading-title" data-ru="Собираем твой профиль..." data-uz="Sening profiling tayyorlanmoqda..."></h2><p class="loading-sub" data-ru="Анализируем ответы и подбираем самые близкие направления" data-uz="Javoblaringni tahlil qilib, senga eng yaqin yo‘nalishlarni tanlayapmiz"></p><div class="loading-step" id="step1"><div class="step-icon">🔍</div><div data-ru="Собираем сигналы по всем типам вопросов" data-uz="Barcha savol turlaridan signallar yig‘ilmoqda"></div></div><div class="loading-step" id="step2"><div class="step-icon">⚡</div><div data-ru="Считаем сильные стороны и соседние векторы" data-uz="Kuchli tomonlar va yaqin yo‘nalishlar hisoblanmoqda"></div></div><div class="loading-step" id="step3"><div class="step-icon">🎯</div><div data-ru="Формируем итоговую рекомендацию" data-uz="Yakuniy tavsiya shakllantirilmoqda"></div></div></div>
+    <div class="loading-content"><div class="loading-animation"><div class="loading-ring ring1"></div><div class="loading-ring ring2"></div><div class="loading-ring ring3"></div><div class="loading-emoji">🧭</div></div><h2 class="loading-title" data-ru="Собираем твой профиль..." data-uz="Sening profiling tayyorlanmoqda..."></h2><p class="loading-sub" data-ru="Анализируем ответы и подбираем самые близкие направления" data-uz="Javoblaringni tahlil qilib, senga eng yaqin yo‘nalishlarni tanlayapmiz"></p><div class="loading-step" id="step1"><div class="step-icon">🔍</div><div data-ru="Собираем сигналы по всем типам вопросов" data-uz="Barcha savol turlaridan signallar yig‘ilmoqda"></div></div><div class="loading-step" id="step2"><div class="step-icon">⚡</div><div data-ru="Считаем сильные стороны и соседние векторы" data-uz="Kuchli tomonlar va yaqin yo‘nalishlar hisoblanmoqda"></div></div><div class="loading-step" id="step3"><div class="step-icon">🎯</div><div data-ru="Формируем топ-3 направления" data-uz="Top-3 yo‘nalish shakllantirilmoqda"></div></div></div>
   </div>
 
   <div class="screen" id="screen-result">
-    <div class="result-wrap"><div class="result-header"><div class="result-badge">🎉 <span data-ru="Твой профиль готов!" data-uz="Sening profiling tayyor!"></span></div><h2 class="result-title" id="result-title-name"></h2></div><div id="result-cards"></div><div class="result-actions"><button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button><button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button></div></div>
+    <div class="result-wrap"><div class="result-header"><div class="result-badge">🎉 <span data-ru="Твой профиль готов!" data-uz="Sening profiling tayyor!"></span></div><h2 class="result-title" id="result-title-name"></h2><p class="result-sub" data-ru="Вот какие форматы учебы и деятельности тебе сейчас ближе всего." data-uz="Mana hozir senga qaysi ta’lim va faoliyat formatlari yaqinroq ekanining natijasi."></p></div><div id="result-cards"></div><div class="result-actions"><button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button><button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button></div></div>
   </div>
   <div class="share-toast" id="share-toast"></div>
 
@@ -108,16 +108,6 @@ const QUESTIONS=[
 {type:'scenario',options:[{dir:'help',ru:'Сделать так, чтобы людям было понятно, удобно и спокойно',uz:'Odamlar uchun tushunarli, qulay va xotirjam bo‘ladigan qilib tayyorlash'},{dir:'comm',ru:'Вести организацию, договоренности и координацию',uz:'Tashkillashtirish, kelishuv va muvofiqlashtirishni olib borish'},{dir:'creative',ru:'Продумать оформление, стиль и подачу',uz:'Bezash, uslub va taqdimotni o‘ylab chiqish'},{dir:'practice',ru:'Настроить всё практическое, чтобы ничего не сломалось и не потерялось',uz:'Hech narsa buzilmasligi va yo‘qolmasligi uchun amaliy qismini sozlash'}],ru:{text:'Нужно помочь подготовить школьное событие. Что тебе ближе?',sub:'Выбери вариант, который тебе реально ближе.'},uz:{text:'Maktab tadbirini tayyorlashga yordam berish kerak. Senga qaysi rol yaqinroq?',sub:'Senga haqiqatan ham yaqin bo‘lgan variantni tanla.'}}
 ];
 const LABELS={ru:{scale:['Совсем не про меня','Очень похоже на меня'],prev:'← Назад',next:'Далее →',finish:'Показать результат →',types:{scale:'Шкальный вопрос',forced:'Выбор из двух',scenario:'Сценарий'},share:'Мой результат в тесте «Навигатор будущего»:\n'},uz:{scale:['Umuman men haqimda emas','Bu menga juda o‘xshaydi'],prev:'← Orqaga',next:'Keyingisi →',finish:'Natijani ko‘rsatish →',types:{scale:'Shkalali savol',forced:'Ikki variantdan tanlash',scenario:'Ssenariy'},share:'“Kelajak navigatori” testidagi natijam:\n'}};
-
-const INSTITUTIONS={
-  tech:{ru:['IT Park University','INHA University in Tashkent','TUIT'],uz:['IT Park University','INHA University in Tashkent','TATU']},
-  analysis:{ru:['WIUT','TSUE','New Uzbekistan University'],uz:['WIUT','TSUE','New Uzbekistan University']},
-  creative:{ru:['ТГИ Дизайна и медиа программы','TEAM University (media tracks)','Cambridge International School (creative labs)'],uz:['Dizayn va media dasturlari','TEAM University (media tracks)','Cambridge International School (creative labs)']},
-  comm:{ru:['MDIS Tashkent','Westminster International University in Tashkent','Университет журналистики и массовых коммуникаций'],uz:['MDIS Tashkent','Westminster International University in Tashkent','Jurnalistika va ommaviy kommunikatsiyalar universiteti']},
-  help:{ru:['Tashkent Pediatric Medical Institute','TSPU','Yeoju Technical Institute (social programs)'],uz:['Toshkent pediatriya tibbiyot instituti','TSPU','Yeoju Technical Institute (social programs)']},
-  practice:{ru:['Turin Polytechnic University in Tashkent','Tashkent State Transport University','Monocenter Ishga Marhamat'],uz:['Turin Polytechnic University in Tashkent','Toshkent davlat transport universiteti','Monocenter Ishga Marhamat']}
-};
-
 let currentLang='ru',currentQ=0,answers=new Array(QUESTIONS.length).fill(null);
 function setLang(lang){currentLang=lang;document.getElementById('btn-ru').classList.toggle('active',lang==='ru');document.getElementById('btn-uz').classList.toggle('active',lang==='uz');document.querySelectorAll('[data-ru]').forEach(el=>el.textContent=lang==='ru'?el.dataset.ru:el.dataset.uz);if(document.getElementById('screen-quiz').classList.contains('active'))renderQuestion();if(document.getElementById('screen-result').classList.contains('active'))showResult();}
 function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
@@ -130,57 +120,8 @@ function nextQuestion(){if(answers[currentQ]===null)return;if(currentQ<QUESTIONS
 function prevQuestion(){if(currentQ>0){currentQ--;renderQuestion()}}
 function computeScores(){const raw={tech:0,analysis:0,creative:0,comm:0,help:0,practice:0},max={tech:0,analysis:0,creative:0,comm:0,help:0,practice:0};QUESTIONS.forEach((q,idx)=>{const a=answers[idx];if(q.type==='scale'){max[q.dir]+=5;if(a!==null)raw[q.dir]+=a}else if(q.type==='forced'){q.options.forEach(o=>max[o.dir]+=2);if(a!==null)raw[q.options[a].dir]+=2}else{q.options.forEach(o=>max[o.dir]+=3);if(a!==null)raw[q.options[a].dir]+=3}});const pct={};Object.keys(raw).forEach(k=>pct[k]=max[k]?Math.round(raw[k]/max[k]*100):0);return{raw,max,pct}}
 function finishTest(){showScreen('screen-loading');['step1','step2','step3'].forEach((id,i)=>{const el=document.getElementById(id);el.classList.remove('visible','done');setTimeout(()=>el.classList.add('visible'),(i+1)*420);setTimeout(()=>el.classList.add('done'),(i+1)*420+260)});setTimeout(showResult,2000)}
-function getRecommendation(){
-  const {pct}=computeScores();
-  const ordered=Object.keys(pct).sort((a,b)=>pct[b]-pct[a]);
-  const mainKey=ordered[0];
-  const related=ordered.slice(1,4);
-  return {pct,mainKey,related};
-}
-function showResult(){
-  const {pct,mainKey,related}=getRecommendation();
-  const d=DIRECTIONS[mainKey],i=d[currentLang];
-  showScreen('screen-result');
-  document.getElementById('result-title-name').textContent=(currentLang==='ru'?'Твоя рекомендация: ':'Sening tavsiyang: ')+i.name;
-  const c=document.getElementById('result-cards');
-  const relatedNames=related.map(k=>DIRECTIONS[k][currentLang].name);
-  const altText=currentLang==='ru'
-    ? 'Что еще можно рассмотреть: '+relatedNames.join(', ')
-    : 'Yana ko‘rib chiqish mumkin: '+relatedNames.join(', ');
-  const institutions=(INSTITUTIONS[mainKey]&&INSTITUTIONS[mainKey][currentLang])?INSTITUTIONS[mainKey][currentLang]:[];
-  c.innerHTML='';
-  const card=document.createElement('div');
-  card.className='result-card visible';
-  card.innerHTML=`<div class="result-card-accent" style="background:${d.color}"></div>
-    <div class="result-card-inner">
-      <div class="result-dir-header">
-        <div class="result-dir-emoji" style="background:${d.bg}">${d.emoji}</div>
-        <div>
-          <div class="result-rank" style="color:${d.color}">${currentLang==='ru'?'Рекомендованный трек':'Tavsiya etilgan trek'}</div>
-          <div class="result-dir-name">${i.name}</div>
-          <div class="result-dir-pct" style="color:${d.color}">${pct[mainKey]}% ${currentLang==='ru'?'соответствия':'moslik'}</div>
-        </div>
-      </div>
-      <div class="result-bar-bg"><div class="result-bar-fill" style="background:${d.color};width:${pct[mainKey]}%"></div></div>
-      <div class="result-section-title">${currentLang==='ru'?'Почему этот трек может подойти':'Nega bu trek mos kelishi mumkin'}</div>
-      <p class="result-desc">${i.why}</p>
-      <div class="result-section-title">${currentLang==='ru'?'Подходящие направления':'Mos yo‘nalishlar'}</div>
-      <div class="result-professions">${i.profs.map(x=>`<span class="profession-tag">${x}</span>`).join('')}</div>
-      <div class="result-section-title" style="margin-top:14px">${currentLang==='ru'?'Что еще можно рассмотреть':'Yana nimani ko‘rib chiqish mumkin'}</div>
-      <p class="result-desc">${altText}</p>
-      <div class="result-activities">${i.activities.map(x=>`<span class="activity-tag" style="background:${d.color}">${x}</span>`).join('')}</div>
-      <div class="result-section-title" style="margin-top:14px">${currentLang==='ru'?'Примеры учреждений':'Muassasalar misollari'}</div>
-      <div class="result-professions">${institutions.map(x=>`<span class="profession-tag">${x}</span>`).join('')}</div>
-    </div>`;
-  c.appendChild(card);
-  try{localStorage.setItem('emaktab_navigator_result_v3',JSON.stringify({recommendation:mainKey,pct,related,answers,date:new Date().toISOString()}))}catch(e){}
-}
-function shareResult(){
-  const {pct,mainKey}=getRecommendation();
-  const name=DIRECTIONS[mainKey][currentLang].name;
-  const text=LABELS[currentLang].share+`${name} — ${pct[mainKey]}%`;
-  if(navigator.share){navigator.share({title:'Навигатор будущего',text})}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('share-toast');t.textContent=currentLang==='ru'?'Результат скопирован ✓':'Natija nusxalandi ✓';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)})}
-}
+function showResult(){const {pct}=computeScores();const top3=Object.keys(pct).sort((a,b)=>pct[b]-pct[a]).slice(0,3);showScreen('screen-result');document.getElementById('result-title-name').textContent=(currentLang==='ru'?'Твой профиль: ':'Sening profiling: ')+DIRECTIONS[top3[0]][currentLang].name;const c=document.getElementById('result-cards');c.innerHTML='';top3.forEach((key,idx)=>{const d=DIRECTIONS[key],i=d[currentLang],card=document.createElement('div');card.className='result-card';card.innerHTML=`<div class="result-card-accent" style="background:${d.color}"></div><div class="result-card-inner"><div class="result-rank" style="color:${d.color}">${i.ranks[idx]}</div><div class="result-dir-header"><div class="result-dir-emoji" style="background:${d.bg}">${d.emoji}</div><div><div class="result-dir-name">${i.name}</div><div class="result-dir-pct" style="color:${d.color}">${pct[key]}% ${currentLang==='ru'?'выраженности':'moslik'}</div></div></div><div class="result-bar-bg"><div class="result-bar-fill" style="background:${d.color};width:${pct[key]}%"></div></div><p class="result-desc"><strong>${currentLang==='ru'?'Почему это могло получиться:':'Nega bunday natija chiqishi mumkin:'}</strong> ${i.why}</p><p class="result-desc">${i.desc}</p><div class="result-section-title">${currentLang==='ru'?'Примеры профессий':'Kasb misollari'}</div><div class="result-professions">${i.profs.map(x=>`<span class="profession-tag">${x}</span>`).join('')}</div><div class="result-section-title" style="margin-top:14px">${currentLang==='ru'?'Что попробовать дальше':'Keyin nimalarni sinab ko‘rish mumkin'}</div><div class="result-activities">${i.activities.map(x=>`<span class="activity-tag" style="background:${d.color}">${x}</span>`).join('')}</div></div>`;c.appendChild(card);setTimeout(()=>card.classList.add('visible'),idx*120+50)});try{localStorage.setItem('emaktab_navigator_result_v3',JSON.stringify({top3,pct,answers,date:new Date().toISOString()}))}catch(e){}}
+function shareResult(){const {pct}=computeScores();const top3=Object.keys(pct).sort((a,b)=>pct[b]-pct[a]).slice(0,3);const text=LABELS[currentLang].share+top3.map((k,i)=>`${i+1}. ${DIRECTIONS[k][currentLang].name} — ${pct[k]}%`).join('\n');if(navigator.share){navigator.share({title:'Навигатор будущего',text})}else if(navigator.clipboard){navigator.clipboard.writeText(text).then(()=>{const t=document.getElementById('share-toast');t.textContent=currentLang==='ru'?'Результат скопирован ✓':'Natija nusxalandi ✓';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)})}}
 setLang('ru');
 </script>
 </body>
