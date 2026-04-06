@@ -1294,6 +1294,90 @@
       return {raw,max,pct};
     }
 
+
+
+    const TRACKS = {
+      academic: {
+        ru: {name:'Академическое образование', summary:'Подойдёт, если интересно глубже изучать профильные предметы, строить фундамент и готовиться к поступлению в вуз.'},
+        uz: {name:'Akademik ta’lim', summary:'Profil fanlarini chuqurroq o‘rganish, mustahkam baza yig‘ish va oliygohga tayyorgarlik uchun mos yo‘l.'}
+      },
+      professional: {
+        ru: {name:'Профессиональное образование', summary:'Подойдёт, если ближе практика, конкретные навыки и результат, который можно применить уже в ближайшее время.'},
+        uz: {name:'Professional ta’lim', summary:'Amaliy ko‘nikmalar, aniq vazifalar va yaqin muddatda qo‘llash mumkin bo‘lgan natija uchun mos yo‘l.'}
+      },
+      general: {
+        ru: {name:'Общее образование', summary:'Подойдёт, если важно сохранить широкий выбор и развивать сильные стороны без ранней узкой специализации.'},
+        uz: {name:'Umumiy ta’lim', summary:'Keng tanlovni saqlab qolish va erta tor ixtisoslashmasdan kuchli tomonlarni rivojlantirish uchun mos yo‘l.'}
+      }
+    };
+
+    function normalizeTrackName(name){
+      const v=(name||'').toLowerCase();
+      if(v.includes('профессион') || v.includes('professional')) return 'professional';
+      if(v.includes('академ') || v.includes('akadem')) return 'academic';
+      return 'general';
+    }
+
+    function getSignalTone(delta,level){
+      const l=LABELS[currentLang];
+      if(delta>=12) return l.strongSignal;
+      if(delta>=5 || level===0) return l.expressedSignal;
+      return l.notableSignal;
+    }
+
+    function renderTagList(items,colored){
+      return items.map(item=>`<span class="result-tag ${colored?'colored':''}" ${colored?`style="background:${item.color}"`:''}>${item.text}</span>`).join('');
+    }
+
+    function renderPlainList(items){
+      return `<ul class="plain-list">${items.map(item=>`<li>${item}</li>`).join('')}</ul>`;
+    }
+
+    function buildResultModel(){
+      const {pct}=computeScores();
+      const sorted=Object.keys(pct).sort((a,b)=>pct[b]-pct[a]);
+      const [top1,top2,top3]=[sorted[0],sorted[1],sorted[2]];
+
+      const primaryDir=DIRECTIONS[top1][currentLang];
+      const secondaryDir=DIRECTIONS[top2][currentLang];
+
+      const primaryTrack=normalizeTrackName(primaryDir.recommendedTrack);
+      const secondaryTrack=normalizeTrackName(primaryDir.alternativeTrack);
+
+      return {
+        pct,
+        top1,
+        top2,
+        top3,
+        archetype:{
+          title:primaryDir.name,
+          summary:primaryDir.whyTrack
+        },
+        insights:{
+          best:`${primaryDir.name}: ${primaryDir.directions.slice(0,3).join(', ')}`,
+          bored: currentLang==='ru'
+            ? `Сложно без задач из ${primaryDir.directions[0].toLowerCase()} и активностей с практической пользой.`
+            : `${primaryDir.directions[0]} bo‘yicha amaliy vazifalarsiz motivatsiya pasayishi mumkin.`,
+          format:primaryDir.whyTrack
+        },
+        tracks:{
+          primary:primaryTrack,
+          secondary:secondaryTrack
+        },
+        subjects:primaryDir.directions.slice(0,6).map(text=>({text,color:DIRECTIONS[top1].color})),
+        environment:{
+          title:LABELS[currentLang].environmentTitle,
+          items:primaryDir.institutions.slice(0,4),
+          note: currentLang==='ru' ? `Смежный вектор: ${secondaryDir.name}.` : `Yondosh vektor: ${secondaryDir.name}.`
+        },
+        nextSteps:[
+          {text: currentLang==='ru' ? `Выбери мини-проект в направлении «${primaryDir.directions[0]}»` : `“${primaryDir.directions[0]}” yo‘nalishida mini-loyiha tanla`, color:DIRECTIONS[top1].color},
+          {text: currentLang==='ru' ? 'Поговори с наставником или учителем о следующем шаге' : 'Ustoz yoki o‘qituvchi bilan keyingi qadamni muhokama qil', color:DIRECTIONS[top2].color},
+          {text: currentLang==='ru' ? `Попробуй активность из смежного направления «${secondaryDir.name}»` : `Yondosh “${secondaryDir.name}” yo‘nalishidan bir faoliyatni sinab ko‘r`, color:DIRECTIONS[top3].color}
+        ]
+      };
+    }
+
     function finishTest(){
       showScreen('screen-loading');
 
