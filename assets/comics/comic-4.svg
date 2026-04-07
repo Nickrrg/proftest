@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" fill="none">
-  <rect width="220" height="220" rx="26" fill="#F5FFF8"/>
-  <circle cx="86" cy="66" r="21" fill="#E1B384"/>
-  <rect x="66" y="90" width="42" height="64" rx="20" fill="#06D6A0"/>
-  <rect x="126" y="92" width="54" height="66" rx="12" fill="#fff" stroke="#8EE8CC" stroke-width="4"/>
-  <path d="M136 116h34M136 130h26M136 144h30" stroke="#3EA384" stroke-width="4" stroke-linecap="round"/>
-  <circle cx="126" cy="126" r="12" fill="#FFF" stroke="#06D6A0" stroke-width="4"/>
-  <path d="M74 52c8-11 30-14 40 0" stroke="#234A3D" stroke-width="8" stroke-linecap="round"/>
-  <text x="26" y="196" fill="#2C9D7C" font-size="18" font-family="Nunito, sans-serif" font-weight="800">O‘qituvchi bola</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <rect width="240" height="240" rx="28" fill="#F1FFF6"/>
+  <circle cx="84" cy="74" r="23" fill="#D9A373"/>
+  <path d="M56 64c10-14 40-18 54 0" stroke="#2C5A4D" stroke-width="8" stroke-linecap="round"/>
+  <rect x="62" y="98" width="44" height="74" rx="20" fill="#06D6A0"/>
+  <rect x="120" y="96" width="84" height="84" rx="14" fill="#fff" stroke="#A5EBD4" stroke-width="4"/>
+  <path d="M136 122h54M136 138h42M136 154h50" stroke="#3EA384" stroke-width="5" stroke-linecap="round"/>
+  <circle cx="124" cy="138" r="12" fill="#fff" stroke="#06D6A0" stroke-width="4"/>
+  <path d="M118 138h12M124 132v12" stroke="#06D6A0" stroke-width="4" stroke-linecap="round"/>
+  <path d="M108 132l14 8" stroke="#06D6A0" stroke-width="5" stroke-linecap="round"/>
 </svg>

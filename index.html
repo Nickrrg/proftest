@@ -81,14 +81,16 @@
     .screen.active{display:flex;flex-direction:column}
 
     #screen-start{
+      position:relative;
       background:linear-gradient(160deg,#EEF0FF 0%,#F4F3FF 50%,#FFF5F0 100%);
       align-items:center;
       justify-content:center;
       text-align:center;
-      padding:72px 24px 40px
+      padding:72px 24px 40px;
+      overflow:hidden
     }
 
-    .start-content{position:relative;max-width:640px}
+    .start-content{position:relative;max-width:640px;z-index:1}
     .start-blob{
       position:absolute;
       border-radius:50%;
@@ -126,6 +128,7 @@
       pointer-events:none;
       overflow:hidden
     }
+    .comic-bg.quiz-bg{opacity:.7}
     .comic-card{
       position:absolute;
       width:160px;
@@ -142,45 +145,60 @@
     .comic-6{bottom:8%;right:10%;transform:rotate(6deg)}
 
     .direction-compass{
-      width:min(480px,92vw);
-      aspect-ratio:1/1;
-      margin:0 auto 36px;
-      position:relative;
-      border-radius:50%;
-      background:radial-gradient(circle at center,rgba(255,255,255,.9) 0%,rgba(255,255,255,.75) 40%,rgba(255,255,255,.38) 75%,rgba(255,255,255,.15) 100%);
-      border:1px solid rgba(91,79,233,.12)
+      width:min(560px,94vw);
+      height:170px;
+      margin:0 auto 24px;
+      position:relative
     }
     .direction-core{
       position:absolute;
-      inset:50% auto auto 50%;
+      left:50%;
+      top:50%;
       transform:translate(-50%,-50%);
-      width:92px;
-      height:92px;
+      width:80px;
+      height:80px;
       border-radius:50%;
-      background:#fff;
       display:flex;
       align-items:center;
       justify-content:center;
       font-weight:900;
       color:var(--primary);
-      font-size:.86rem;
-      box-shadow:0 4px 20px rgba(91,79,233,.15)
+      font-size:.84rem;
+      background:rgba(255,255,255,.75);
+      border:1px dashed rgba(91,79,233,.35)
     }
+    .compass-line{
+      position:absolute;
+      left:50%;
+      top:50%;
+      width:2px;
+      height:54px;
+      background:linear-gradient(180deg,rgba(91,79,233,.35),rgba(91,79,233,.05));
+      transform-origin:bottom center
+    }
+    .line-1{transform:translate(-50%,-100%) rotate(0deg)}
+    .line-2{transform:translate(-50%,-100%) rotate(60deg)}
+    .line-3{transform:translate(-50%,-100%) rotate(120deg)}
+    .line-4{transform:translate(-50%,-100%) rotate(180deg)}
+    .line-5{transform:translate(-50%,-100%) rotate(240deg)}
+    .line-6{transform:translate(-50%,-100%) rotate(300deg)}
+
     .compass-item{
       position:absolute;
-      width:132px;
+      width:124px;
       text-align:center;
-      font-size:.83rem;
+      font-size:.8rem;
       font-weight:800;
-      line-height:1.25
+      line-height:1.2;
+      padding:0
     }
     .compass-item span{display:block}
-    .compass-1{top:8%;left:50%;transform:translateX(-50%)}
-    .compass-2{top:30%;right:6%}
-    .compass-3{bottom:22%;right:10%}
-    .compass-4{bottom:8%;left:50%;transform:translateX(-50%)}
-    .compass-5{bottom:22%;left:10%}
-    .compass-6{top:30%;left:6%}
+    .compass-1{top:0;left:50%;transform:translateX(-50%)}
+    .compass-2{top:26px;right:14%}
+    .compass-3{bottom:26px;right:14%}
+    .compass-4{bottom:0;left:50%;transform:translateX(-50%)}
+    .compass-5{bottom:26px;left:14%}
+    .compass-6{top:26px;left:14%}
 
     .start-meta{
       display:flex;
@@ -225,11 +243,15 @@
       align-items:center
     }
 
+    #screen-quiz{position:relative;overflow:hidden}
+
     .quiz-wrap,
     .result-wrap{
       width:100%;
       max-width:760px;
-      margin:0 auto
+      margin:0 auto;
+      position:relative;
+      z-index:1
     }
 
     .progress-area{margin-bottom:32px}
@@ -791,8 +813,9 @@
     @media(max-width:600px){
       .brand-logo{height:30px}
       .hero-logo{height:64px}
-      .direction-compass{width:min(340px,94vw)}
-      .compass-item{width:106px;font-size:.74rem}
+      .direction-compass{width:min(350px,96vw);height:146px}
+      .compass-item{width:88px;font-size:.7rem}
+      .compass-2{right:3%}.compass-3{right:3%}.compass-5{left:3%}.compass-6{left:3%}
       .comic-card{width:120px;opacity:.12}
       .question-card{padding:24px 20px}
       .scale-labels{font-size:.82rem}
@@ -837,7 +860,13 @@
          data-uz="24 ta savolga javob berib, ayni paytda senga qaysi ta’lim treki va faoliyat formati yaqinroq ekanini bilib ol."></p>
 
       <div class="direction-compass">
-        <div class="direction-core" data-ru="Компас" data-uz="Kompas"></div>
+        <div class="compass-line line-1"></div>
+        <div class="compass-line line-2"></div>
+        <div class="compass-line line-3"></div>
+        <div class="compass-line line-4"></div>
+        <div class="compass-line line-5"></div>
+        <div class="compass-line line-6"></div>
+        <div class="direction-core" data-ru="Вектор" data-uz="Vektor"></div>
         <div class="compass-item compass-1" style="color:var(--c1)">💻 <span data-ru="Технологии" data-uz="Texnologiyalar"></span></div>
         <div class="compass-item compass-2" style="color:var(--c2)">🔬 <span data-ru="Анализ" data-uz="Tahlil"></span></div>
         <div class="compass-item compass-3" style="color:var(--c3)">🎨 <span data-ru="Творчество" data-uz="Ijod"></span></div>
@@ -864,6 +893,14 @@
   </div>
 
   <div class="screen" id="screen-quiz">
+    <div class="comic-bg quiz-bg">
+      <div class="comic-card comic-1"><img src="assets/comics/comic-1.svg" alt=""></div>
+      <div class="comic-card comic-2"><img src="assets/comics/comic-2.svg" alt=""></div>
+      <div class="comic-card comic-3"><img src="assets/comics/comic-3.svg" alt=""></div>
+      <div class="comic-card comic-4"><img src="assets/comics/comic-4.svg" alt=""></div>
+      <div class="comic-card comic-5"><img src="assets/comics/comic-5.svg" alt=""></div>
+      <div class="comic-card comic-6"><img src="assets/comics/comic-6.svg" alt=""></div>
+    </div>
     <div class="quiz-wrap">
       <div class="progress-area">
         <div class="progress-header">

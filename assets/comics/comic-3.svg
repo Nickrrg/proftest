@@ -1,10 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220" fill="none">
-  <rect width="220" height="220" rx="26" fill="#FFF7F3"/>
-  <circle cx="74" cy="70" r="21" fill="#E1B384"/>
-  <rect x="54" y="92" width="40" height="62" rx="18" fill="#FF6B6B"/>
-  <path d="M120 88l34 12-14 38-34-12z" fill="#FFD7C2" stroke="#FF9F1C" stroke-width="4"/>
-  <path d="M100 154l22-20" stroke="#FF9F1C" stroke-width="5" stroke-linecap="round"/>
-  <circle cx="148" cy="112" r="6" fill="#FF6B6B"/>
-  <path d="M58 56c8-12 30-14 40 0" stroke="#4A2D2D" stroke-width="8" stroke-linecap="round"/>
-  <text x="24" y="196" fill="#D95A5A" font-size="18" font-family="Nunito, sans-serif" font-weight="800">Dizayner qiz</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" fill="none">
+  <rect width="240" height="240" rx="28" fill="#FFF4EE"/>
+  <circle cx="76" cy="76" r="23" fill="#D9A373"/>
+  <path d="M50 66c8-14 38-18 52 0" stroke="#5A2E2E" stroke-width="8" stroke-linecap="round"/>
+  <rect x="56" y="98" width="42" height="72" rx="20" fill="#FF6B6B"/>
+  <path d="M116 96l42 14-18 46-42-14z" fill="#FFDCCB" stroke="#FF9F1C" stroke-width="4"/>
+  <circle cx="164" cy="128" r="24" fill="#FFF" stroke="#FFB36A" stroke-width="4"/>
+  <path d="M148 124c6-10 20-10 26 0" stroke="#FF6B6B" stroke-width="4" stroke-linecap="round"/>
+  <path d="M150 138c8 7 16 7 24 0" stroke="#FF9F1C" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="110" cy="162" r="8" fill="#06D6A0"/>
 </svg>
