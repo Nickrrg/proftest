@@ -584,8 +584,9 @@
       flex-wrap:wrap;
       margin-top:8px
     }
-    .btn-share,
-    .btn-restart{
+    .btn-back,
+    .btn-restart,
+    .btn-copy-link{
       display:inline-flex;
       align-items:center;
       gap:8px;
@@ -594,7 +595,7 @@
       border-radius:50px;
       cursor:pointer
     }
-    .btn-share{
+    .btn-back{
       background:#fff;
       border:2.5px solid #E8E6F8;
       color:var(--text)
@@ -603,6 +604,18 @@
       background:var(--primary);
       color:#fff;
       border:none
+    }
+
+    .btn-copy-link{
+      background:#fff;
+      border:2.5px solid #E8E6F8;
+      color:var(--text)
+    }
+    .result-link-note{
+      width:100%;
+      text-align:center;
+      color:var(--text2);
+      font-size:.82rem
     }
 
     .share-toast{
@@ -903,14 +916,14 @@
 
     <div id="result-cards"></div>
 
-    <div class="result-actions">
-      <button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button>
-      <button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button>
-    </div>
+    <div class="result-actions" id="result-actions-root"></div>
   </div>
 </div>
 
   <div class="share-toast" id="share-toast"></div>
+
+  <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
 
   <script>
     const DIRECTIONS = {
@@ -1319,6 +1332,7 @@
         prev:'← Назад',
         next:'Далее →',
         finish:'Показать результат →',
+        restart:'Пройти заново',
         types:{triad:'Выбор из трёх'},
         share:'Мой результат в тесте «Навигатор будущего»:\\n',
         resultHeroPrefix:'Ты — ',
@@ -1337,12 +1351,16 @@
         environmentTitle:'Какую среду искать',
         institutionsTitle:'Примеры школ / классов / колледжей',
         nextStepsTitle:'Что попробовать уже в этом году',
-        copied:'Результат скопирован ✓'
+        copied:'Ссылка на результат скопирована!',
+        back:'Назад в eMaktab',
+        staticResultLink:'Постоянная ссылка на результат',
+        copyResultLink:'Копировать ссылку'
       },
       uz:{
         prev:'← Orqaga',
         next:'Keyingisi →',
         finish:'Natijani ko‘rsatish →',
+        restart:'Qaytadan o‘tish',
         types:{triad:'Uch variantdan tanlash'},
         share:'“Kelajak navigatori” testidagi natijam:\\n',
         resultHeroPrefix:'Sen — ',
@@ -1361,7 +1379,10 @@
         environmentTitle:'Qanday muhitni izlash kerak',
         institutionsTitle:'Mos maktab / sinf / kollej misollari',
         nextStepsTitle:'Shu yil nimalarni sinab ko‘rish mumkin',
-        copied:'Natija nusxalandi ✓'
+        copied:'Natija havolasi nusxalandi!',
+        back:'eMaktabga qaytish',
+        staticResultLink:'Natijaning doimiy havolasi',
+        copyResultLink:'Havolani nusxalash'
       }
     };
 
@@ -1440,9 +1461,11 @@
       }
     };
 
+    const RESULT_STORAGE_KEY='emaktab_navigator_result_v6';
     let currentLang='ru';
     let currentQ=0;
     let answers=new Array(QUESTIONS.length).fill(null);
+    let activeResultModel=null;
 
     function setLang(lang){
       currentLang=lang;
@@ -1454,7 +1477,7 @@
       });
 
       if(document.getElementById('screen-quiz').classList.contains('active')) renderQuestion();
-      if(document.getElementById('screen-result').classList.contains('active')) showResult();
+      if(document.getElementById('screen-result').classList.contains('active')) showResult(activeResultModel || undefined);
     }
 
     function showScreen(id){
@@ -1470,6 +1493,10 @@
     }
 
     function restart(){
+      const url = new URL(window.location.href);
+      url.searchParams.delete('result');
+      window.history.replaceState({},'',url);
+      activeResultModel=null;
       showScreen('screen-start');
     }
 
@@ -1655,8 +1682,8 @@
       setTimeout(showResult,1800);
     }
 
-    function showResult(){
-      const model=buildResultModel();
+    function showResult(prebuiltModel){
+      const model=prebuiltModel || buildResultModel();
       const l=LABELS[currentLang];
       const top1=DIRECTIONS[model.top1];
       const top2=DIRECTIONS[model.top2];
@@ -1724,7 +1751,6 @@
             <div class="result-section">
               <div class="result-section-title">${l.environmentTitle}</div>
               ${renderPlainList(model.environment)}
-              <div class="helper-note">${currentLang==='ru' ? 'Сюда можно подставить реальный список школ или колледжей из базы МДШО.' : 'Bu yerga MMTV bazasidan real maktab yoki kollejlar ro‘yxatini qo‘shish mumkin.'}</div>
             </div>
             <div class="result-section">
               <div class="result-section-title">${l.nextStepsTitle}</div>
@@ -1736,9 +1762,10 @@
       ].join('');
 
       c.innerHTML = cardsMarkup;
+      renderResultActions(model);
 
       try{
-        localStorage.setItem('emaktab_navigator_result_v5',JSON.stringify({
+        localStorage.setItem(RESULT_STORAGE_KEY,JSON.stringify({
           model,
           answers,
           date:new Date().toISOString()
@@ -1746,26 +1773,84 @@
       }catch(e){}
     }
 
-    function shareResult(){
-      const model=buildResultModel();
-      const l=LABELS[currentLang];
-      const text = `${l.share}${model.archetypeTitle}
-${l.primaryTrackTitle}: ${TRACKS[model.primaryTrack][currentLang].name}
-${l.secondSignal}: ${model.signal2Name}`;
-
-      if(navigator.share){
-        navigator.share({title:'Навигатор будущего',text});
-      }else if(navigator.clipboard){
-        navigator.clipboard.writeText(text).then(()=>{
-          const t=document.getElementById('share-toast');
-          t.textContent=l.copied;
-          t.classList.add('show');
-          setTimeout(()=>t.classList.remove('show'),2200);
-        });
+    function encodeResultModel(model){
+      try{
+        const serialized = JSON.stringify({lang:currentLang,model});
+        return btoa(unescape(encodeURIComponent(serialized))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+      }catch(e){
+        return '';
       }
     }
 
+    function decodeResultModel(encoded){
+      try{
+        const normalized = encoded.replace(/-/g,'+').replace(/_/g,'/');
+        const padded = normalized + '='.repeat((4 - normalized.length % 4) % 4);
+        const json = decodeURIComponent(escape(atob(padded)));
+        const payload = JSON.parse(json);
+        if(payload && payload.model){
+          currentLang = payload.lang === 'uz' ? 'uz' : 'ru';
+          return payload.model;
+        }
+      }catch(e){}
+      return null;
+    }
+
+    function getStaticResultLink(model){
+      const payload = encodeResultModel(model);
+      const url = new URL(window.location.href);
+      url.searchParams.set('result', payload);
+      return url.toString();
+    }
+
+    function copyResultLink(){
+      if(!activeResultModel || !navigator.clipboard) return;
+      const link = getStaticResultLink(activeResultModel);
+      navigator.clipboard.writeText(link).then(()=>{
+        const t=document.getElementById('share-toast');
+        t.textContent=LABELS[currentLang].copied;
+        t.classList.add('show');
+        setTimeout(()=>t.classList.remove('show'),2200);
+      });
+    }
+
+    function goBackToEmaktab(){
+      window.location.href='https://emaktab.uz';
+    }
+
+    function ResultActions(props){
+      return React.createElement(React.Fragment, null,
+        React.createElement('button', {className:'btn-back', onClick:goBackToEmaktab}, `← ${props.labels.back}`),
+        React.createElement('button', {className:'btn-copy-link', onClick:copyResultLink}, `🔗 ${props.labels.copyResultLink}`),
+        React.createElement('button', {className:'btn-restart', onClick:restart}, `🔄 ${props.labels.restart}`),
+        React.createElement('div', {className:'result-link-note'}, `${props.labels.staticResultLink}: ${props.link}`)
+      );
+    }
+
+    function renderResultActions(model){
+      const container = document.getElementById('result-actions-root');
+      if(!container || !window.React || !window.ReactDOM) return;
+      const link = getStaticResultLink(model);
+      activeResultModel = model;
+      if(!container._reactRoot){
+        container._reactRoot = ReactDOM.createRoot(container);
+      }
+      container._reactRoot.render(React.createElement(ResultActions, {labels: LABELS[currentLang], link}));
+    }
+
+    function restoreResultFromUrl(){
+      const params = new URLSearchParams(window.location.search);
+      const encoded = params.get('result');
+      if(!encoded) return false;
+      const restored = decodeResultModel(encoded);
+      if(!restored) return false;
+      setLang(currentLang);
+      showResult(restored);
+      return true;
+    }
+
     setLang('ru');
+    restoreResultFromUrl();
 
   </script>
 </body>
