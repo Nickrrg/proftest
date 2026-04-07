@@ -120,24 +120,67 @@
       margin-right:auto
     }
 
-    .direction-pills{
-      display:flex;
-      flex-wrap:wrap;
-      justify-content:center;
-      gap:10px;
-      margin-bottom:36px
+    .comic-bg{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden
     }
-    .direction-pill{
+    .comic-card{
+      position:absolute;
+      width:160px;
+      aspect-ratio:1/1;
+      opacity:.16;
+      filter:saturate(.9)
+    }
+    .comic-card img{width:100%;height:100%;object-fit:contain}
+    .comic-1{top:8%;left:4%;transform:rotate(-8deg)}
+    .comic-2{top:12%;right:4%;transform:rotate(7deg)}
+    .comic-3{top:44%;left:0;transform:rotate(-6deg)}
+    .comic-4{top:42%;right:1%;transform:rotate(8deg)}
+    .comic-5{bottom:10%;left:8%;transform:rotate(-5deg)}
+    .comic-6{bottom:8%;right:10%;transform:rotate(6deg)}
+
+    .direction-compass{
+      width:min(480px,92vw);
+      aspect-ratio:1/1;
+      margin:0 auto 36px;
+      position:relative;
+      border-radius:50%;
+      background:radial-gradient(circle at center,rgba(255,255,255,.9) 0%,rgba(255,255,255,.75) 40%,rgba(255,255,255,.38) 75%,rgba(255,255,255,.15) 100%);
+      border:1px solid rgba(91,79,233,.12)
+    }
+    .direction-core{
+      position:absolute;
+      inset:50% auto auto 50%;
+      transform:translate(-50%,-50%);
+      width:92px;
+      height:92px;
+      border-radius:50%;
+      background:#fff;
       display:flex;
       align-items:center;
-      gap:7px;
-      background:#fff;
-      border-radius:50px;
-      padding:8px 16px;
-      font-size:.82rem;
-      font-weight:700;
-      box-shadow:0 2px 10px rgba(0,0,0,.06)
+      justify-content:center;
+      font-weight:900;
+      color:var(--primary);
+      font-size:.86rem;
+      box-shadow:0 4px 20px rgba(91,79,233,.15)
     }
+    .compass-item{
+      position:absolute;
+      width:132px;
+      text-align:center;
+      font-size:.83rem;
+      font-weight:800;
+      line-height:1.25
+    }
+    .compass-item span{display:block}
+    .compass-1{top:8%;left:50%;transform:translateX(-50%)}
+    .compass-2{top:30%;right:6%}
+    .compass-3{bottom:22%;right:10%}
+    .compass-4{bottom:8%;left:50%;transform:translateX(-50%)}
+    .compass-5{bottom:22%;left:10%}
+    .compass-6{top:30%;left:6%}
 
     .start-meta{
       display:flex;
@@ -584,7 +627,7 @@
       flex-wrap:wrap;
       margin-top:8px
     }
-    .btn-share,
+    .btn-back,
     .btn-restart{
       display:inline-flex;
       align-items:center;
@@ -594,7 +637,7 @@
       border-radius:50px;
       cursor:pointer
     }
-    .btn-share{
+    .btn-back{
       background:#fff;
       border:2.5px solid #E8E6F8;
       color:var(--text)
@@ -604,25 +647,6 @@
       color:#fff;
       border:none
     }
-
-    .share-toast{
-      position:fixed;
-      bottom:24px;
-      left:50%;
-      transform:translateX(-50%) translateY(80px);
-      background:var(--text);
-      color:#fff;
-      padding:14px 24px;
-      border-radius:50px;
-      font-weight:700;
-      font-size:.88rem;
-      z-index:999;
-      transition:transform .3s
-    }
-    .share-toast.show{
-      transform:translateX(-50%) translateY(0)
-    }
-
 
 .result-hero{
   background:linear-gradient(160deg,#fff 0%,#F7F5FF 60%,#FFF9F4 100%);
@@ -758,11 +782,6 @@
   color:var(--primary);
   font-weight:900
 }
-.helper-note{
-  margin-top:10px;
-  font-size:.82rem;
-  color:var(--text3)
-}
 
     @media(max-width:860px){
       .insight-grid,
@@ -772,6 +791,9 @@
     @media(max-width:600px){
       .brand-logo{height:30px}
       .hero-logo{height:64px}
+      .direction-compass{width:min(340px,94vw)}
+      .compass-item{width:106px;font-size:.74rem}
+      .comic-card{width:120px;opacity:.12}
       .question-card{padding:24px 20px}
       .scale-labels{font-size:.82rem}
       .scale-btn{width:46px;height:46px;font-size:1rem}
@@ -791,6 +813,14 @@
   </header>
 
   <div class="screen active" id="screen-start">
+    <div class="comic-bg">
+      <div class="comic-card comic-1"><img src="assets/comics/comic-1.svg" alt=""></div>
+      <div class="comic-card comic-2"><img src="assets/comics/comic-2.svg" alt=""></div>
+      <div class="comic-card comic-3"><img src="assets/comics/comic-3.svg" alt=""></div>
+      <div class="comic-card comic-4"><img src="assets/comics/comic-4.svg" alt=""></div>
+      <div class="comic-card comic-5"><img src="assets/comics/comic-5.svg" alt=""></div>
+      <div class="comic-card comic-6"><img src="assets/comics/comic-6.svg" alt=""></div>
+    </div>
     <div class="start-blob blob1"></div>
     <div class="start-blob blob2"></div>
     <div class="start-blob blob3"></div>
@@ -806,13 +836,14 @@
          data-ru="Пройди 24 вопроса и узнай, какой образовательный трек и формат деятельности тебе сейчас ближе всего."
          data-uz="24 ta savolga javob berib, ayni paytda senga qaysi ta’lim treki va faoliyat formati yaqinroq ekanini bilib ol."></p>
 
-      <div class="direction-pills">
-        <div class="direction-pill" style="color:var(--c1)">💻 <span data-ru="Технологии" data-uz="Texnologiyalar"></span></div>
-        <div class="direction-pill" style="color:var(--c2)">🔬 <span data-ru="Анализ" data-uz="Tahlil"></span></div>
-        <div class="direction-pill" style="color:var(--c3)">🎨 <span data-ru="Творчество" data-uz="Ijod"></span></div>
-        <div class="direction-pill" style="color:var(--c4)">🎤 <span data-ru="Коммуникации" data-uz="Muloqot"></span></div>
-        <div class="direction-pill" style="color:var(--c5)">🤝 <span data-ru="Помощь" data-uz="Yordam"></span></div>
-        <div class="direction-pill" style="color:var(--c6)">🔧 <span data-ru="Практика" data-uz="Amaliyot"></span></div>
+      <div class="direction-compass">
+        <div class="direction-core" data-ru="Компас" data-uz="Kompas"></div>
+        <div class="compass-item compass-1" style="color:var(--c1)">💻 <span data-ru="Технологии" data-uz="Texnologiyalar"></span></div>
+        <div class="compass-item compass-2" style="color:var(--c2)">🔬 <span data-ru="Анализ" data-uz="Tahlil"></span></div>
+        <div class="compass-item compass-3" style="color:var(--c3)">🎨 <span data-ru="Творчество" data-uz="Ijod"></span></div>
+        <div class="compass-item compass-4" style="color:var(--c4)">🎤 <span data-ru="Коммуникации" data-uz="Muloqot"></span></div>
+        <div class="compass-item compass-5" style="color:var(--c5)">🤝 <span data-ru="Помощь" data-uz="Yordam"></span></div>
+        <div class="compass-item compass-6" style="color:var(--c6)">🔧 <span data-ru="Практика" data-uz="Amaliyot"></span></div>
       </div>
 
       <div class="start-meta">
@@ -904,13 +935,11 @@
     <div id="result-cards"></div>
 
     <div class="result-actions">
-      <button class="btn-share" onclick="shareResult()">📤 <span data-ru="Поделиться" data-uz="Ulashish"></span></button>
+      <button class="btn-back" onclick="goToEMaktab()">↩️ <span data-ru="Назад в eMaktab" data-uz="eMaktab’ga qaytish"></span></button>
       <button class="btn-restart" onclick="restart()">🔄 <span data-ru="Пройти заново" data-uz="Qaytadan o‘tish"></span></button>
     </div>
   </div>
 </div>
-
-  <div class="share-toast" id="share-toast"></div>
 
   <script>
     const DIRECTIONS = {
@@ -1335,9 +1364,7 @@
         secondaryTrackTitle:'Смежный путь',
         importantSubjectsTitle:'Какие предметы сейчас важнее',
         environmentTitle:'Какую среду искать',
-        institutionsTitle:'Примеры школ / классов / колледжей',
-        nextStepsTitle:'Что попробовать уже в этом году',
-        copied:'Результат скопирован ✓'
+        nextStepsTitle:'Что попробовать уже в этом году'
       },
       uz:{
         prev:'← Orqaga',
@@ -1359,9 +1386,7 @@
         secondaryTrackTitle:'Yondosh yo‘l',
         importantSubjectsTitle:'Hozir qaysi fanlar muhimroq',
         environmentTitle:'Qanday muhitni izlash kerak',
-        institutionsTitle:'Mos maktab / sinf / kollej misollari',
-        nextStepsTitle:'Shu yil nimalarni sinab ko‘rish mumkin',
-        copied:'Natija nusxalandi ✓'
+        nextStepsTitle:'Shu yil nimalarni sinab ko‘rish mumkin'
       }
     };
 
@@ -1724,7 +1749,6 @@
             <div class="result-section">
               <div class="result-section-title">${l.environmentTitle}</div>
               ${renderPlainList(model.environment)}
-              <div class="helper-note">${currentLang==='ru' ? 'Сюда можно подставить реальный список школ или колледжей из базы МДШО.' : 'Bu yerga MMTV bazasidan real maktab yoki kollejlar ro‘yxatini qo‘shish mumkin.'}</div>
             </div>
             <div class="result-section">
               <div class="result-section-title">${l.nextStepsTitle}</div>
@@ -1746,23 +1770,8 @@
       }catch(e){}
     }
 
-    function shareResult(){
-      const model=buildResultModel();
-      const l=LABELS[currentLang];
-      const text = `${l.share}${model.archetypeTitle}
-${l.primaryTrackTitle}: ${TRACKS[model.primaryTrack][currentLang].name}
-${l.secondSignal}: ${model.signal2Name}`;
-
-      if(navigator.share){
-        navigator.share({title:'Навигатор будущего',text});
-      }else if(navigator.clipboard){
-        navigator.clipboard.writeText(text).then(()=>{
-          const t=document.getElementById('share-toast');
-          t.textContent=l.copied;
-          t.classList.add('show');
-          setTimeout(()=>t.classList.remove('show'),2200);
-        });
-      }
+    function goToEMaktab(){
+      window.location.href='https://emaktab.uz/';
     }
 
     setLang('ru');
